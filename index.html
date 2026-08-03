@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>班主任管理驾驶舱 · 2026年7月</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c1222;--bg2:#111a2e;--card:#151f35;
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.1);
+  --text:#e8edf5;--text2:#8b95a8;--text3:#5a6478;
+  --accent:#6366f1;--accent2:#818cf8;--accent-glow:rgba(99,102,241,.15);
+  --green:#22c55e;--green-bg:rgba(34,197,94,.1);--green-bd:rgba(34,197,94,.25);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.1);--red-bd:rgba(239,68,68,.25);
+  --orange:#f59e0b;--orange-bg:rgba(245,158,11,.1);--orange-bd:rgba(245,158,11,.25);
+  --cyan:#06b6d4;--cyan-bg:rgba(6,182,212,.1);
+  --purple:#a855f7;--purple-bg:rgba(168,85,247,.1);
+  --blue:#3b82f6;--blue-bg:rgba(59,130,246,.1);
+  --r:12px;--rs:8px;
+}
+body{font-family:-apple-system,'SF Pro Display','Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
+
+/* Header */
+.hdr{background:linear-gradient(135deg,#1e1b4b,#312e81 50%,#1e3a5f);border-radius:16px;padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden;border:1px solid rgba(99,102,241,.2)}
+.hdr::before{content:'';position:absolute;top:-50%;right:-20%;width:60%;height:200%;background:radial-gradient(circle,rgba(99,102,241,.12),transparent 70%);pointer-events:none}
+.hdr h1{font-size:24px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,#e0e7ff,#c7d2fe,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr .sub{color:rgba(255,255,255,.5);font-size:13px;margin-top:6px}
+.hdr .db{position:absolute;right:28px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:10px 18px;text-align:center}
+.hdr .db .n{font-size:28px;font-weight:800;color:#a5b4fc;line-height:1}
+.hdr .db .l{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* Summary cards */
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:22px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;transition:all .2s}
+.sc:hover{border-color:var(--border2);transform:translateY(-1px)}
+.sc .lb{font-size:11px;color:var(--text2);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.sc .lb .dot{width:7px;height:7px;border-radius:50%}
+.sc .vl{font-size:24px;font-weight:800;letter-spacing:-.5px}
+.sc .sv{font-size:11px;color:var(--text3);margin-top:3px}
+.sc .bb{height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:8px;overflow:hidden}
+.sc .bf{height:100%;border-radius:2px}
+.sc-lg{padding:22px 22px;border-width:2px}
+.sc-lg .vl{font-size:30px}
+.sc-lg .lb{font-size:13px;font-weight:600}
+.sc-lg .sv{font-size:12px}
+.sc-lg .bb{height:4px;margin-top:10px}
+
+/* Tabs */
+.tabs{display:flex;gap:5px;margin-bottom:18px;background:var(--bg2);padding:4px;border-radius:var(--r);border:1px solid var(--border)}
+.tab{flex:1;text-align:center;padding:10px 14px;border-radius:var(--rs);cursor:pointer;font-size:13px;font-weight:600;color:var(--text2);transition:all .2s;border:1px solid transparent}
+.tab:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.tab.on{color:#fff;background:var(--accent);border-color:rgba(99,102,241,.4);box-shadow:0 2px 12px rgba(99,102,241,.25)}
+.tab .bd{display:inline-block;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 5px;font-size:10px;margin-left:3px}
+.tab.on .bd{background:rgba(255,255,255,.2)}
+.pn{display:none;animation:fu .3s ease}
+.pn.on{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Section card */
+.sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.sh .si{width:34px;height:34px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:16px}
+.sh h3{font-size:14px;font-weight:700}
+.sh .sd{font-size:11px;color:var(--text3);margin-top:1px}
+
+/* Target cards */
+.tg{display:grid;gap:12px}
+.tg.c3{grid-template-columns:repeat(3,1fr)}
+.tg.c2{grid-template-columns:repeat(2,1fr)}
+.tc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px;text-align:center}
+.tc .tl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.tc .tv{font-size:20px;font-weight:800}
+.tc .tb{height:5px;background:rgba(255,255,255,.06);border-radius:3px;margin:8px 6px 0;overflow:hidden}
+.tc .tf{height:100%;border-radius:3px}
+.tc .td{font-size:10px;color:var(--text3);margin-top:5px}
+
+/* Tables */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}
+thead th{background:rgba(255,255,255,.03);color:var(--text2);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;padding:9px 10px;text-align:center;border-bottom:1px solid var(--border)}
+thead th:first-child{text-align:left;border-radius:var(--rs) 0 0 0}
+thead th:last-child{border-radius:0 var(--rs) 0 0}
+tbody td{padding:9px 10px;text-align:center;border-bottom:1px solid var(--border);vertical-align:middle}
+tbody td:first-child{text-align:left;font-weight:600}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+tbody tr:last-child td{border-bottom:none}
+.tr-total{background:rgba(99,102,241,.06)!important;border-top:2px solid rgba(99,102,241,.2)}
+.tr-total td{font-weight:700!important;color:var(--accent2)!important;border-bottom:none!important}
+
+/* Cell */
+.cm{font-family:'SF Mono','Cascadia Code',monospace;font-weight:700;letter-spacing:-.3px}
+.cz{color:var(--text3)}
+
+/* Cell with bar + status */
+.cb{display:flex;flex-direction:column;align-items:center;gap:2px}
+.cb .cv{font-size:12px;font-weight:700}
+.cb .bar{width:44px;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.cb .bar .fill{height:100%;border-radius:2px}
+.cb .st{font-size:9px;font-weight:600}
+
+/* Badge */
+.bg{display:inline-flex;align-items:center;gap:2px;font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px}
+.bg.ok{color:var(--green);background:var(--green-bg);border:1px solid var(--green-bd)}
+.bg.no{color:var(--red);background:var(--red-bg);border:1px solid var(--red-bd)}
+.bg.wr{color:var(--orange);background:var(--orange-bg);border:1px solid var(--orange-bd)}
+
+/* Summary table special */
+.sum-table thead th{background:rgba(99,102,241,.08);color:var(--accent2);font-size:11px;text-transform:none;letter-spacing:0}
+.sum-table tbody td{font-size:13px}
+.sum-table .metric-name{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px}
+
+/* Achievement table */
+.ach-table tbody td{font-size:13px}
+.ach-table .ach-rate{font-weight:800;font-size:14px}
+.ach-table .ach-good{color:var(--green)}
+.ach-table .ach-warn{color:var(--orange)}
+.ach-table .ach-bad{color:var(--red)}
+
+/* Score cards */
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+.score-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;position:relative;transition:all .2s}
+.score-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.score-card .sc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.score-card .sc-name{font-size:15px;font-weight:700}
+.score-card .sc-team{font-size:10px;color:var(--text3);background:rgba(255,255,255,.05);padding:2px 8px;border-radius:4px;margin-left:8px}
+.score-badge{display:flex;align-items:baseline;gap:4px}
+.score-badge .pts{font-size:30px;font-weight:900;line-height:1}
+.score-badge .grade{font-size:20px;font-weight:900}
+.sc-dims{display:flex;flex-direction:column;gap:5px}
+.sc-dim{display:flex;align-items:center;gap:6px}
+.sc-dim .dl{width:58px;font-size:10px;color:var(--text2);text-align:right;flex-shrink:0}
+.sc-dim .dbar{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.sc-dim .dfill{height:100%;border-radius:3px;transition:width .6s ease}
+.sc-dim .dv{width:28px;font-size:10px;font-weight:700;text-align:right;color:var(--text2)}
+.grade-a{color:var(--green)}.grade-b{color:#60a5fa}.grade-c{color:var(--orange)}.grade-d{color:#fb923c}.grade-f{color:var(--red)}
+.rank-table thead th{background:rgba(99,102,241,.1);color:var(--accent2);font-size:11px}
+.rank-table tbody td{font-size:12px;padding:8px 6px}
+.rank-table .rank-num{font-size:16px;font-weight:900;width:30px}
+.rank-medal{font-size:18px}
+.team-avg-card{background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(6,182,212,.08));border:1px solid rgba(99,102,241,.2);border-radius:var(--r);padding:16px 18px;margin-bottom:16px}
+.team-avg-card h4{font-size:13px;color:var(--text2);margin-bottom:10px;font-weight:600}
+
+@media(max-width:900px){
+  .tg.c3,.tg.c2{grid-template-columns:1fr}
+  .sg{grid-template-columns:repeat(2,1fr)}
+  .hdr .db{display:none}
+  body{padding:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>📊 班主任管理驾驶舱</h1>
+  <div class="sub">学历教育 · 续费 & 学历 & 档案全维度追踪</div>
+  <div class="db"><div class="n" id="hdrDate">--.--</div><div class="l" id="hdrWeek">加载中</div></div>
+</div>
+
+<div class="sg" id="sumGrid"></div>
+
+<div class="tabs">
+  <div class="tab on" onclick="sw('p1',this)">🎓 成考<span class="bd">6人</span></div>
+  <div class="tab" onclick="sw('p2',this)">📚 自考<span class="bd">4人</span></div>
+  <div class="tab" onclick="sw('p3',this)">💻 网电<span class="bd">2人</span></div>
+  <div class="tab" onclick="sw('p4',this)">🏆 能力评分</div>
+</div>
+
+<!-- ===== 成考 ===== -->
+<div class="pn on" id="p1">
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">🎯</div><div><h3>成考 · 7月月度目标总览</h3><div class="sd">团队月度目标及当前完成进度</div></div></div>
+    <div class="tg c3" id="ckTg"></div>
+  </div>
+
+  <!-- 成交明细 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--purple-bg);color:var(--purple)">📋</div><div><h3>成考 · 成交明细汇总</h3><div class="sd">各人订单类型分布（7月累计）</div></div></div>
+    <div class="tw"><table class="ach-table">
+      <thead><tr><th>姓名</th><th>学历单</th><th>论文</th><th>档案</th><th>其他订单</th><th>异动</th><th>退费</th><th>合计</th></tr></thead>
+      <tbody id="ckDeal"></tbody>
+    </table></div>
+  </div>
+
+  <!-- 成考 异动退费汇总 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--red-bg);color:var(--red)">⚠️</div><div><h3>成考 · 异动与退费汇总</h3><div class="sd">团队异动/退费监控</div></div></div>
+    <div class="tw"><table class="ach-table">
+      <thead><tr><th>指标</th><th>异动量</th><th>24h异动</th><th>退费量</th><th>风险评估</th></tr></thead>
+      <tbody id="ckRisk"></tbody>
+    </table></div>
+  </div>
+
+  <!-- 个人目标vs实际 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">📊</div><div><h3>成考 · 个人月度目标 vs 实际</h3><div class="sd">续费 / 学历 / 档案 三维达成率</div></div></div>
+    <div class="tw"><table class="ach-table">
+      <thead><tr><th>姓名</th><th>续费目标</th><th>续费实际</th><th>达成率</th><th>学历目标</th><th>学历实际</th><th>档案目标</th><th>档案实际</th></tr></thead>
+      <tbody id="ckAch"></tbody>
+    </table></div>
+  </div>
+
+  <!-- 团队指标周汇总 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>成考 · 团队指标周完成情况</h3><div class="sd">续费 / 学历 / 档案 五周趋势</div></div></div>
+    <div class="tw"><table class="sum-table">
+      <thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周<br><span style="font-weight:400">7/1-5</span></th><th>第二周<br><span style="font-weight:400">7/6-12</span></th><th>第三周<br><span style="font-weight:400">7/13-19</span></th><th>第四周<br><span style="font-weight:400">7/20-26</span></th><th>第五周<br><span style="font-weight:400">7/27-31</span></th><th>达成率</th></tr></thead>
+      <tbody id="ckSum"></tbody>
+    </table></div>
+  </div>
+
+  <!-- 周续费 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>成考 · 个人续费周明细</h3><div class="sd">周目标 = 月目标 ÷ 4</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckRW"></tbody></table></div>
+  </div>
+  <!-- 周学历 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>成考 · 个人学历单周明细</h3><div class="sd">周目标 = 月目标 ÷ 4（向上取整）</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckEW"></tbody></table></div>
+  </div>
+  <!-- 周档案 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>成考 · 个人档案周明细</h3><div class="sd">周目标 = 月目标 ÷ 4（向上取整）</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckAW"></tbody></table></div>
+  </div>
+  <!-- 日续费 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>成考 · 个人续费日明细（第五周）</h3><div class="sd">日目标 = 月目标 ÷ 20 工作日</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckRD"></tbody></table></div>
+  </div>
+  <!-- 日学历 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>成考 · 个人学历单日明细（第五周）</h3><div class="sd">日目标 = max(1, 月目标 ÷ 20)</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckED"></tbody></table></div>
+  </div>
+  <!-- 日档案 -->
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>成考 · 个人档案日明细（第五周）</h3><div class="sd">日目标 = max(1, 月目标 ÷ 20)</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckAD"></tbody></table></div>
+  </div>
+</div>
+
+<!-- ===== 自考 ===== -->
+<div class="pn" id="p2">
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">🎯</div><div><h3>自考 · 7月月度目标总览</h3><div class="sd">团队月度目标及当前完成进度</div></div></div>
+    <div class="tg c3" id="zkTg"></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--purple-bg);color:var(--purple)">📋</div><div><h3>自考 · 成交明细汇总</h3><div class="sd">各人订单类型分布（7月累计）</div></div></div>
+    <div class="tw"><table class="ach-table"><thead><tr><th>姓名</th><th>续费</th><th>学历单</th><th>论文档案</th><th>转介绍</th><th>异动</th><th>24h异动</th><th>退费</th></tr></thead><tbody id="zkDeal"></tbody></table></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--red-bg);color:var(--red)">⚠️</div><div><h3>自考 · 异动与退费汇总</h3><div class="sd">团队异动/退费监控</div></div></div>
+    <div class="tw"><table class="ach-table">
+      <thead><tr><th>指标</th><th>异动量</th><th>24h异动</th><th>退费量</th><th>风险评估</th></tr></thead>
+      <tbody id="zkRisk"></tbody>
+    </table></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">📊</div><div><h3>自考 · 个人月度目标 vs 实际</h3><div class="sd">续费 / 学历 / 档案 达成率</div></div></div>
+    <div class="tw"><table class="ach-table"><thead><tr><th>姓名</th><th>续费目标</th><th>续费实际</th><th>达成率</th><th>学历实际</th><th>论文档案</th></tr></thead><tbody id="zkAch"></tbody></table></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>自考 · 团队指标周完成情况</h3><div class="sd">学历 / 档案 五周趋势</div></div></div>
+    <div class="tw"><table class="sum-table"><thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>达成率</th></tr></thead><tbody id="zkSum"></tbody></table></div>
+  </div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>自考 · 个人续费周明细</h3><div class="sd">周目标 = ¥60,000 ÷ 4 = ¥15,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkRW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>自考 · 个人学历单周明细</h3><div class="sd">学历单个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkEW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>自考 · 个人档案周明细</h3><div class="sd">档案个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkAW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>自考 · 个人续费日明细（第五周）</h3><div class="sd">日目标 = ¥60,000 ÷ 20 = ¥3,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkRD"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>自考 · 个人学历单日明细（第五周）</h3><div class="sd">本周学历每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkED"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>自考 · 个人档案日明细（第五周）</h3><div class="sd">本周档案每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkAD"></tbody></table></div></div>
+</div>
+
+<!-- ===== 网电 ===== -->
+<div class="pn" id="p3">
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">🎯</div><div><h3>网电 · 7月月度目标总览</h3><div class="sd">团队月度目标及当前完成进度</div></div></div>
+    <div class="tg c2" id="wdTg"></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--purple-bg);color:var(--purple)">📋</div><div><h3>网电 · 成交明细汇总</h3><div class="sd">各人订单类型分布（7月累计）</div></div></div>
+    <div class="tw"><table class="ach-table"><thead><tr><th>姓名</th><th>续费</th><th>学历单</th><th>转介绍</th><th>异动</th><th>24h异动</th><th>退费</th></tr></thead><tbody id="wdDeal"></tbody></table></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--red-bg);color:var(--red)">⚠️</div><div><h3>网电 · 异动与退费汇总</h3><div class="sd">团队异动/退费监控</div></div></div>
+    <div class="tw"><table class="ach-table">
+      <thead><tr><th>指标</th><th>异动量</th><th>24h异动</th><th>退费量</th><th>风险评估</th></tr></thead>
+      <tbody id="wdRisk"></tbody>
+    </table></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">📊</div><div><h3>网电 · 个人月度目标 vs 实际</h3><div class="sd">续费 / 学历 达成率</div></div></div>
+    <div class="tw"><table class="ach-table"><thead><tr><th>姓名</th><th>续费目标</th><th>续费实际</th><th>达成率</th><th>学历实际</th></tr></thead><tbody id="wdAch"></tbody></table></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>网电 · 团队指标周完成情况</h3><div class="sd">学历 五周趋势（不涉及档案）</div></div></div>
+    <div class="tw"><table class="sum-table"><thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>达成率</th></tr></thead><tbody id="wdSum"></tbody></table></div>
+  </div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>网电 · 个人续费周明细</h3><div class="sd">周目标 = ¥40,000 ÷ 4 = ¥10,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="wdRW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>网电 · 个人学历单周明细</h3><div class="sd">学历单个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="wdEW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>网电 · 个人续费日明细（第五周）</h3><div class="sd">日目标 = ¥40,000 ÷ 20 = ¥2,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="wdRD"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>网电 · 个人学历单日明细（第五周）</h3><div class="sd">本周学历每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="wdED"></tbody></table></div></div>
+</div>
+
+<!-- ===== 能力评分 ===== -->
+<div class="pn" id="p4">
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">🏆</div><div><h3>个人工作能力综合评分</h3><div class="sd">基于续费达成、学历产出、档案执行、周稳定性、冲刺能力、日达标率六维度综合评估</div></div></div>
+    <div class="tw"><table class="rank-table" style="margin-bottom:18px">
+      <thead><tr><th>排名</th><th>姓名</th><th>板块</th><th>总分</th><th>等级</th><th>续费达成</th><th>学历产出</th><th>档案执行</th><th>周稳定性</th><th>冲刺力</th><th>日达标</th></tr></thead>
+      <tbody id="rankBody"></tbody>
+    </table></div>
+    <div id="teamAvgArea"></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">🎓</div><div><h3>成考团队 · 能力画像</h3><div class="sd">6人六维评分详情</div></div></div>
+    <div class="score-grid" id="scoreCK"></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--purple-bg);color:var(--purple)">📚</div><div><h3>自考团队 · 能力画像</h3><div class="sd">4人六维评分详情</div></div></div>
+    <div class="score-grid" id="scoreZK"></div>
+  </div>
+  <div class="sec">
+    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">💻</div><div><h3>网电团队 · 能力画像</h3><div class="sd">2人五维评分详情（不涉及档案）</div></div></div>
+    <div class="score-grid" id="scoreWD"></div>
+  </div>
+</div>
+
+<script>
+function sw(id,el){document.querySelectorAll('.pn').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById(id).classList.add('on');el.classList.add('on')}
+function fmt(n){return typeof n==='number'?n.toLocaleString('zh-CN'):n}
+
+function cell(v,tgt,money){
+  if(v===0&&tgt===0)return'<span class="cz">—</span>';
+  if(tgt===0)return'<span class="cz">0</span>';
+  const met=v>=tgt,pct=Math.min(v/tgt*100,200);
+  const c=met?'var(--green)':v>0?'var(--orange)':'var(--red)';
+  const bc=met?'var(--green)':v>0?'var(--orange)':'var(--red)';
+  const st=met?'✓达标':v>0?'未达':'—';
+  const dv=money?`¥${fmt(v)}`:v;
+  return`<div class="cb"><span class="cv" style="color:${c}">${dv}</span><div class="bar"><div class="fill" style="width:${Math.min(pct,100)}%;background:${bc}"></div></div><span class="st" style="color:${c}">${st}</span></div>`;
+}
+
+function bw(id,names,tgts,data,money){
+  const tb=document.getElementById(id);let h='';
+  names.forEach((n,i)=>{
+    const t=tgts[i],vs=data[i],tot=vs.reduce((a,b)=>a+b,0);
+    const mw=vs.filter(v=>v>=t).length;
+    const tc=tot>=t?'var(--green)':tot>0?'var(--orange)':'var(--red)';
+    h+='<tr>';
+    h+=`<td>${n}</td><td style="color:var(--text2);font-weight:600">${money?'¥':''}${fmt(t)}</td>`;
+    vs.forEach(v=>{h+=`<td>${cell(v,t,money)}</td>`});
+    h+=`<td style="color:${tc};font-weight:800;font-size:13px">${money?'¥':''}${fmt(tot)}</td>`;
+    h+=`<td><span class="bg ${mw>=3?'ok':mw>=2?'wr':'no'}">${mw}/5</span></td></tr>`;
+  });
+  const tt=tgts.reduce((a,b)=>a+b,0);
+  const tw=[];for(let w=0;w<5;w++)tw.push(data.reduce((s,r)=>s+r[w],0));
+  const tTot=tw.reduce((a,b)=>a+b,0);
+  const tM=tw.filter(v=>v>=tt).length;
+  const tc2=tTot>=tt?'var(--green)':tTot>0?'var(--orange)':'var(--red)';
+  h+=`<tr class="tr-total"><td>📊 团队</td><td>${money?'¥':''}${fmt(tt)}</td>`;
+  tw.forEach(v=>{h+=`<td>${cell(v,tt,money)}</td>`});
+  h+=`<td style="font-size:13px">${money?'¥':''}${fmt(tTot)}</td>`;
+  h+=`<td><span class="bg ${tM>=3?'ok':tM>=2?'wr':'no'}">${tM}/5</span></td></tr>`;
+  tb.innerHTML=h;
+}
+
+function bd(id,names,tgts,data,money){
+  const tb=document.getElementById(id);let h='';
+  names.forEach((n,i)=>{
+    const t=tgts[i],vs=data[i],tot=vs.reduce((a,b)=>a+b,0);
+    const md=vs.filter(v=>v>=t).length;
+    const tc=tot>=t*5?'var(--green)':tot>0?'var(--orange)':'var(--red)';
+    h+='<tr>';
+    h+=`<td>${n}</td><td style="color:var(--text2);font-weight:600">${money?'¥':''}${fmt(t)}</td>`;
+    vs.forEach(v=>{h+=`<td>${cell(v,t,money)}</td>`});
+    h+=`<td style="color:${tc};font-weight:800;font-size:13px">${money?'¥':''}${fmt(tot)}</td>`;
+    h+=`<td><span class="bg ${md>=3?'ok':md>=1?'wr':'no'}">${md}/5</span></td></tr>`;
+  });
+  const tt=tgts.reduce((a,b)=>a+b,0);
+  const td2=[];for(let d=0;d<5;d++)td2.push(data.reduce((s,r)=>s+r[d],0));
+  const tTot=td2.reduce((a,b)=>a+b,0);
+  const tMD=td2.filter(v=>v>=tt).length;
+  const tc2=tTot>=tt*5?'var(--green)':tTot>0?'var(--orange)':'var(--red)';
+  h+=`<tr class="tr-total"><td>📊 团队</td><td>${money?'¥':''}${fmt(tt)}</td>`;
+  td2.forEach(v=>{h+=`<td>${cell(v,tt,money)}</td>`});
+  h+=`<td style="font-size:13px">${money?'¥':''}${fmt(tTot)}</td>`;
+  h+=`<td><span class="bg ${tMD>=3?'ok':tMD>=1?'wr':'no'}">${tMD}/5</span></td></tr>`;
+  tb.innerHTML=h;
+}
+
+// ============ DATA FROM JSON ============
+const DASHBOARD_DATA = {"config":{"成考":{"names":["魏山俊","吕茜","李洁","彭林玉","杨熳倩","刘婷"],"month_targets":{"魏山俊":{"xf":35000,"xl":5,"da":34},"吕茜":{"xf":35000,"xl":5,"da":34},"李洁":{"xf":35000,"xl":5,"da":34},"彭林玉":{"xf":35000,"xl":5,"da":34},"杨熳倩":{"xf":35000,"xl":5,"da":34},"刘婷":{"xf":25000,"xl":3,"da":30}}},"自考":{"names":["张一妹","谭婉琴","胡望","施润娜"],"month_targets":{"张一妹":{"xf":60000,"xl":2,"da":3},"谭婉琴":{"xf":60000,"xl":2,"da":3},"胡望":{"xf":60000,"xl":1,"da":2},"施润娜":{"xf":60000,"xl":0,"da":2}}},"网电":{"names":["朱永永","张玮琦"],"month_targets":{"朱永永":{"xf":40000,"xl":3,"da":0},"张玮琦":{"xf":40000,"xl":2,"da":0}}}},"data":{"成考":{"魏山俊":{"xf_31d":[0,0,0,0,0,0,0,9740,3050,0,0,0,0,945,0,2680,0,0,0,0,80,0,0,1790,1700,0,4235,6780,0,8574,2420],"xl_31d":[0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,1],"da_31d":[0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,3,1,0,3,5,0,0,3,2,0,2,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0],"xf_w":[0,12790,3625,3570,22009,41994],"xl_w":[1,1,0,3,2,7],"da_w":[0,3,0,12,7,22],"lw_w":[0,0,0,1,0,1]},"吕茜":{"xf_31d":[0,0,0,0,0,3040,0,3755,0,0,1980,0,0,480,1980,1980,1155,0,0,1980,5940,0,0,3000,1980,0,3960,5370,6120,780,10450],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0],"da_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,3],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[0,8775,5595,12900,26680,53950],"xl_w":[0,0,0,2,1,3],"da_w":[0,0,0,2,5,7],"lw_w":[0,0,1,0,0,1]},"李洁":{"xf_31d":[0,1980,0,0,0,1600,0,0,0,6690,0,0,0,1980,1980,2060,1980,0,0,0,0,0,0,3960,0,0,1980,0,6880,1980,0],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0],"da_31d":[0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,2,1,3,0,2,0,2,3,2,1,3],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[1980,8290,8000,3960,10840,33070],"xl_w":[0,0,1,2,1,4],"da_w":[0,0,2,8,11,21],"lw_w":[0,0,0,0,0,0]},"彭林玉":{"xf_31d":[0,0,0,0,0,0,0,4170,0,0,3465,0,0,3160,1980,0,0,0,0,3380,3960,1100,4600,9845,3460,0,0,0,0,3650,0],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],"da_31d":[2,0,0,0,0,0,1,0,0,1,0,0,1,1,0,1,1,0,0,0,1,1,3,2,1,0,4,3,3,2,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],"xf_w":[0,7635,5140,26345,3650,42770],"xl_w":[0,0,0,1,0,1],"da_w":[2,2,4,8,12,28],"lw_w":[0,0,3,0,1,4]},"杨熳倩":{"xf_31d":[0,2080,0,0,0,0,0,5940,1980,3200,2200,0,5940,5600,3514,3300,1980,0,0,0,0,0,0,1160,1980,0,70,6160,3200,3794,10465],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0],"da_31d":[0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,4,0,3,0,9,3,3,4,4],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],"xf_w":[2080,13320,20334,3140,23689,62563],"xl_w":[0,0,1,1,0,2],"da_w":[0,2,2,7,23,34],"lw_w":[0,0,1,0,1,2]},"刘婷":{"xf_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4190,1050,4960,1100,6705,7010,5620,1600],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"da_31d":[0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,2,5,0,0,0,2,0,2,2,4,0,0,0,0,2,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[0,0,0,10200,22035,32235],"xl_w":[0,0,0,0,0,0],"da_w":[0,2,7,10,2,21],"lw_w":[0,0,0,0,0,0]}},"自考":{"张一妹":{"xf_31d":[4700,10560,8900,0,10800,2780,0,26600,12120,1260,7475.3,7780,2860,0,2780,5000,2780,0,0,2780,10760,16480,2780,300,5120,5000,5800,3900,7260,8800,0],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"da_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[34960,58015.3,13420,43220,25760,175375.3],"xl_w":[0,0,0,0,0,0],"da_w":[0,0,0,3,0,3],"lw_w":[0,0,0,0,0,0]},"谭婉琴":{"xf_31d":[0,0,0,0,0,2860,4380,0,0,2980,1980,0,6560,0,2780,4560,0,0,780,1280,9340,5560,2000,0,4980,2280,2780,0,7780,5560,3780],"xl_31d":[0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"da_31d":[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[0,12200,14680,25440,19900,72220],"xl_w":[0,2,1,0,0,3],"da_w":[1,0,0,0,0,1],"lw_w":[0,0,0,0,0,0]},"胡望":{"xf_31d":[0,0,0,0,2780,0,14,3780,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"da_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[2780,3794,0,0,0,6574],"xl_w":[0,0,0,0,0,0],"da_w":[0,0,0,0,0,0],"lw_w":[0,0,0,0,0,0]},"施润娜":{"xf_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3780],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"da_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[0,0,0,0,3780,3780],"xl_w":[0,0,0,0,0,0],"da_w":[0,0,0,0,0,0],"lw_w":[0,0,0,0,0,0]}},"网电":{"朱永永":{"xf_31d":[6900,2150,4850,0,0,0,4850,0,0,0,2230,0,0,7967,13300,16280,4850,0,0,7850,0,0,0,5150,0,0,0,4350,0,0,5150],"xl_31d":[0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0],"da_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[13900,7080,42397,13000,9500,85877],"xl_w":[0,3,0,1,2,6],"da_w":[0,0,0,0,0,0],"lw_w":[0,0,0,0,0,0]},"张玮琦":{"xf_31d":[0,5980,0,0,0,1300,9960,4250,0,0,0,0,0,0,2300,3500,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xl_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"da_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"lw_31d":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"xf_w":[5980,15510,5800,0,0,27290],"xl_w":[0,0,0,0,0,0],"da_w":[0,0,0,0,0,0],"lw_w":[0,0,0,0,0,0]}}},"risk":{"成考":{"yd":0,"yd24h":0,"tf":0},"自考":{"yd":10,"yd24h":5,"tf":21},"网电":{"yd":12,"yd24h":1,"tf":9}},"risk_detail":{"自考":{"张一妹":{"yd":2,"yd24h":1,"tf":8},"谭婉琴":{"yd":4,"yd24h":3,"tf":10},"胡望":{"yd":4,"yd24h":0,"tf":2},"施润娜":{"yd":0,"yd24h":1,"tf":1}},"网电":{"朱永永":{"yd":1,"yd24h":0,"tf":0},"张玮琦":{"yd":10,"yd24h":1,"tf":9}}},"team_summary":{"成考":{"xf_target":200000,"xf_month":266582,"xl_target":28,"xl_month":15,"da_target":200,"da_month":128,"lw_month":8},"自考":{"xf_target":240000,"xf_month":257949.3,"xl_target":5,"xl_month":3,"da_target":10,"da_month":4,"lw_month":0},"网电":{"xf_target":80000,"xf_month":113167,"xl_target":5,"xl_month":6,"da_target":0,"da_month":0,"lw_month":0}},"data_date":31,"date_display":"7.31","date_sub":"星期五 · 第5周"};
+const D=DASHBOARD_DATA, CFG=D.config, DD=D.data, RISK=D.risk, RD=D.risk_detail, TS=D.team_summary;
+// Dynamic date header
+if(D.date_display){document.getElementById('hdrDate').textContent=D.date_display;document.getElementById('hdrWeek').textContent=D.date_sub||'';}
+
+// Helper: get last 5 days from 31-day array
+function last5(arr){
+  let ln=-1;for(let i=30;i>=0;i--){if(arr[i]!==0){ln=i;break;}}
+  if(ln<0)return[0,0,0,0,0];
+  const s=Math.max(0,ln-4);return arr.slice(s,s+5);
+}
+function last5dates(){
+  // Find latest non-zero day across all people and all fields
+  let globalLn=29; // default to day 30 (Jul 30)
+  for(const board of ['成考','自考','网电']){
+    for(const name of CFG[board].names){
+      const p=DD[board][name];
+      for(const field of ['xf_31d','xl_31d','da_31d']){
+        const arr=p[field]||[];
+        for(let i=30;i>=0;i--){if(arr[i]!==0){if(i>globalLn)globalLn=i;break;}}
+      }
+    }
+  }
+  const s=Math.max(0,globalLn-4);
+  const labels=[];for(let i=s;i<s+5;i++)labels.push('7/'+(i+1));
+  return labels;
+}
+// Fill date headers dynamically
+(function(){
+  const dates=last5dates();
+  document.querySelectorAll('th.dh').forEach((el,i)=>{el.textContent=dates[i%5];});
+})();
+
+// ============ 成考 DATA ============
+const ckN=CFG['成考'].names, ckMT=CFG['成考'].month_targets;
+const ckRT=ckN.map(n=>Math.round(ckMT[n].xf/4));
+const ckET=ckN.map(n=>Math.ceil(ckMT[n].xl/4));
+const ckAT=ckN.map(n=>Math.ceil(ckMT[n].da/4));
+const ckRW=ckN.map(n=>DD['成考'][n].xf_w.slice(0,5));
+const ckEW=ckN.map(n=>DD['成考'][n].xl_w.slice(0,5));
+const ckAW=ckN.map(n=>DD['成考'][n].da_w.slice(0,5));
+const ckRDT=ckN.map(n=>Math.round(ckMT[n].xf/20));
+const ckEDT=ckN.map(n=>Math.max(1,Math.ceil(ckMT[n].xl/20)));
+const ckADT=ckN.map(n=>Math.max(1,Math.ceil(ckMT[n].da/20)));
+const ckRD=ckN.map(n=>last5(DD['成考'][n].xf_31d));
+const ckED=ckN.map(n=>last5(DD['成考'][n].xl_31d));
+const ckAD=ckN.map(n=>last5(DD['成考'][n].da_31d));
+
+// ============ 自考 DATA ============
+const zkN=CFG['自考'].names, zkMT=CFG['自考'].month_targets;
+const zkRT=zkN.map(n=>Math.round(zkMT[n].xf/4));
+const zkET=zkN.map(n=>Math.ceil(zkMT[n].xl/4));
+const zkAT=zkN.map(n=>Math.ceil(zkMT[n].da/4));
+const zkRW=zkN.map(n=>DD['自考'][n].xf_w.slice(0,5));
+const zkEW=zkN.map(n=>DD['自考'][n].xl_w.slice(0,5));
+const zkAW=zkN.map(n=>DD['自考'][n].da_w.slice(0,5));
+const zkRDT=zkN.map(n=>Math.round(zkMT[n].xf/20));
+const zkEDT=zkN.map(n=>Math.max(1,Math.ceil(zkMT[n].xl/20)));
+const zkADT=zkN.map(n=>Math.max(1,Math.ceil(zkMT[n].da/20)));
+const zkRD=zkN.map(n=>last5(DD['自考'][n].xf_31d));
+const zkED=zkN.map(n=>last5(DD['自考'][n].xl_31d));
+const zkAD=zkN.map(n=>last5(DD['自考'][n].da_31d));
+
+// ============ 网电 DATA ============
+const wdN=CFG['网电'].names, wdMT=CFG['网电'].month_targets;
+const wdRT=wdN.map(n=>Math.round(wdMT[n].xf/4));
+const wdET=wdN.map(n=>Math.ceil(wdMT[n].xl/4));
+const wdRW=wdN.map(n=>DD['网电'][n].xf_w.slice(0,5));
+const wdEW=wdN.map(n=>DD['网电'][n].xl_w.slice(0,5));
+const wdRDT=wdN.map(n=>Math.round(wdMT[n].xf/20));
+const wdEDT=wdN.map(n=>Math.max(1,Math.ceil(wdMT[n].xl/20)));
+const wdRD=wdN.map(n=>last5(DD['网电'][n].xf_31d));
+const wdED=wdN.map(n=>last5(DD['网电'][n].xl_31d));
+
+// ============ RENDER TARGET CARDS (top summary) ============
+(function(){
+  function mkTc(icon,label,target,actual,unit,color,gradient){
+    const pct=target>0?(actual/target*100):0;
+    const done=pct>=100;
+    const c=done?'var(--green)':color;
+    const v=unit==='元'?'¥'+fmt(actual):fmt(actual)+' '+unit;
+    const tv_c=done?'var(--green)':color;
+    const s=done?`目标 ${unit==='元'?'¥'+fmt(target):fmt(target)+' '+unit} ✅`:`目标 ${unit==='元'?'¥'+fmt(target):fmt(target)+' '+unit}`;
+    return `<div class="tc"><div class="tl">${icon} ${label}</div><div class="tv" style="color:${tv_c}">${v}</div><div class="tb"><div class="tf" style="width:${Math.min(pct,100)}%;background:${gradient}"></div></div><div class="td">已完成 ${s.replace('目标 ','')} (${pct.toFixed(1)}%)${done?' ✅':''}</div></div>`;
+  }
+  // 成考
+  const s1=TS['成考'];
+  document.getElementById('ckTg').innerHTML=
+    mkTc('💰','续费目标',s1.xf_target,s1.xf_month,'元','var(--orange)','linear-gradient(90deg,var(--orange),#fbbf24)')+
+    mkTc('📖','学历单',s1.xl_target,s1.xl_month,'单','var(--green)','linear-gradient(90deg,#16a34a,var(--green))')+
+    mkTc('📁','档案',s1.da_target,s1.da_month,'份','var(--cyan)','linear-gradient(90deg,#0891b2,var(--cyan))');
+  // 自考
+  const s2=TS['自考'];
+  document.getElementById('zkTg').innerHTML=
+    mkTc('💰','续费目标',s2.xf_target,s2.xf_month,'元','var(--accent2)','linear-gradient(90deg,var(--accent),var(--accent2))')+
+    mkTc('📖','学历单',s2.xl_target,s2.xl_month,'单','var(--green)','linear-gradient(90deg,#16a34a,var(--green))')+
+    mkTc('📁','论文档案',s2.da_target,s2.da_month,'份','var(--cyan)','linear-gradient(90deg,#0891b2,var(--cyan))');
+  // 网电
+  const s3=TS['网电'];
+  const g3=s3.xf_month>=s3.xf_target?'var(--green)':'var(--orange)';
+  const grd3='linear-gradient(90deg,#16a34a,var(--green))';
+  document.getElementById('wdTg').innerHTML=
+    mkTc('💰','续费目标',s3.xf_target,s3.xf_month,'元',g3,grd3)+
+    mkTc('📖','学历单',s3.xl_target,s3.xl_month,'单',s3.xl_month>=s3.xl_target?'var(--green)':'var(--orange)',grd3);
+})();
+
+// ============ RENDER DETAIL TABLES ============
+bw('ckRW',ckN,ckRT,ckRW,true);bw('ckEW',ckN,ckET,ckEW,false);bw('ckAW',ckN,ckAT,ckAW,false);
+bd('ckRD',ckN,ckRDT,ckRD,true);bd('ckED',ckN,ckEDT,ckED,false);bd('ckAD',ckN,ckADT,ckAD,false);
+bw('zkRW',zkN,zkRT,zkRW,true);bw('zkEW',zkN,zkET,zkEW,false);bw('zkAW',zkN,zkAT,zkAW,false);
+bd('zkRD',zkN,zkRDT,zkRD,true);bd('zkED',zkN,zkEDT,zkED,false);bd('zkAD',zkN,zkADT,zkAD,false);
+bw('wdRW',wdN,wdRT,wdRW,true);bw('wdEW',wdN,wdET,wdEW,false);
+bd('wdRD',wdN,wdRDT,wdRD,true);bd('wdED',wdN,wdEDT,wdED,false);
+
+// ============ RENDER SUMMARY TABLES ============
+
+// 成考 成交明细
+(function(){
+  const data=ckN.map(n=>{
+    const p=DD['成考'][n];
+    const xl=p.xl_w[5], lw=p.lw_w?p.lw_w[5]:0, da=p.da_w[5];
+    const total=xl+lw+da;
+    return [n, xl, lw, da, 0, 0, 0, total];
+  });
+  const totals=[0,0,0,0,0,0,0];
+  data.forEach(r=>{for(let i=1;i<7;i++)totals[i-1]+=r[i];});
+  totals[0]=TS['成考'].xl_month; totals[1]=TS['成考'].lw_month||0; totals[2]=TS['成考'].da_month;
+  totals[3]=0; totals[4]=RISK['成考'].yd; totals[5]=RISK['成考'].tf;
+  totals[6]=totals[0]+totals[1]+totals[2];
+  let h='';
+  data.forEach(r=>{
+    h+='<tr>';
+    h+=`<td>${r[0]}</td>`;
+    for(let i=1;i<7;i++){
+      const v=r[i];const cls=v===0?'cz':'';
+      h+=`<td class="${cls}">${v||'—'}</td>`;
+    }
+    h+=`<td style="font-weight:800;color:var(--accent2);font-size:14px">${r[7]}</td></tr>`;
+  });
+  h+=`<tr class="tr-total"><td>📊 合计</td>`;
+  for(let i=0;i<7;i++){
+    if(i<6){
+      const sty=i>=4?'color:var(--red);font-weight:700;font-size:14px':'font-size:14px';
+      h+=`<td style="${sty}">${totals[i]}</td>`;
+    }else{
+      h+=`<td style="font-size:14px;color:var(--accent2);font-weight:800">${totals[i]}</td>`;
+    }
+  }
+  h+='</tr>';
+  document.getElementById('ckDeal').innerHTML=h;
+})();
+
+// 成考 异动退费汇总
+(function(){
+  const r=RISK['成考'];
+  const totalYd=RISK['成考'].yd+RISK['自考'].yd+RISK['网电'].yd;
+  const totalYd24=RISK['成考'].yd24h+RISK['自考'].yd24h+RISK['网电'].yd24h;
+  const totalTf=RISK['成考'].tf+RISK['自考'].tf+RISK['网电'].tf;
+  const riskLevel=r.yd>50?'高风险':r.yd>20?'需关注':'正常';
+  const riskCls=r.yd>50?'no':r.yd>20?'wr':'ok';
+  let h='';
+  h+=`<tr><td style="font-weight:700">成考团队</td>`;
+  h+=`<td style="font-weight:800;color:var(--red);font-size:15px">${r.yd}</td>`;
+  h+=`<td style="font-weight:700;color:var(--orange)">${r.yd24h}</td>`;
+  h+=`<td style="font-weight:800;color:var(--red);font-size:15px">${r.tf}</td>`;
+  h+=`<td><span class="bg ${riskCls}">${riskLevel}</span></td></tr>`;
+  h+=`<tr class="tr-total"><td>📊 三板块合计</td><td style="font-size:14px">${totalYd}</td><td style="font-size:14px">${totalYd24}</td><td style="font-size:14px">${totalTf}</td><td>—</td></tr>`;
+  document.getElementById('ckRisk').innerHTML=h;
+})();
+
+// 成考 达成率
+(function(){
+  const data=ckN.map(n=>{
+    const mt=ckMT[n], p=DD['成考'][n];
+    return [n, mt.xf, p.xf_w[5], mt.xl, p.xl_w[5], mt.da, p.da_w[5]];
+  });
+  let h='';
+  data.forEach(r=>{
+    const rate=r[2]/r[1]*100;
+    const rc=rate>=100?'ach-good':rate>=70?'ach-warn':'ach-bad';
+    h+='<tr>';
+    h+=`<td>${r[0]}</td>`;
+    h+=`<td class="cm">¥${fmt(r[1])}</td>`;
+    h+=`<td class="cm" style="font-weight:700">¥${fmt(r[2])}</td>`;
+    h+=`<td class="ach-rate ${rc}">${rate.toFixed(1)}%</td>`;
+    const eMet=r[4]>=r[3];
+    h+=`<td>${r[3]}</td>`;
+    h+=`<td style="color:${eMet?'var(--green)':r[4]>0?'var(--orange)':'var(--red)'}; font-weight:700">${r[4]} <span style="font-size:10px">${eMet?'✓':'✗'}</span></td>`;
+    const aMet=r[6]>=r[5];
+    h+=`<td>${r[5]}</td>`;
+    h+=`<td style="color:${aMet?'var(--green)':r[6]>0?'var(--orange)':'var(--red)'}; font-weight:700">${r[6]} <span style="font-size:10px">${aMet?'✓':'✗'}</span></td>`;
+    h+='</tr>';
+  });
+  const tRTot=data.reduce((s,r)=>s+r[2],0),tRTgt=data.reduce((s,r)=>s+r[1],0);
+  const tRate=tRTot/tRTgt*100;
+  const tE=data.reduce((s,r)=>s+r[4],0),tEM=data.reduce((s,r)=>s+r[3],0);
+  const tA=data.reduce((s,r)=>s+r[6],0),tAM=data.reduce((s,r)=>s+r[5],0);
+  h+=`<tr class="tr-total"><td>📊 合计</td><td class="cm">¥${fmt(tRTgt)}</td><td class="cm">¥${fmt(tRTot)}</td><td class="ach-rate ${tRate>=100?'ach-good':tRate>=70?'ach-warn':'ach-bad'}">${tRate.toFixed(1)}%</td><td>${tEM}</td><td style="font-weight:800">${tE}</td><td>${tAM}</td><td style="font-weight:800">${tA}</td></tr>`;
+  document.getElementById('ckAch').innerHTML=h;
+})();
+
+// 成考 团队周汇总
+(function(){
+  const s=TS['成考'];
+  const rMonth=s.xf_target,eMonth=s.xl_target,aMonth=s.da_target;
+  const rW=[0,1,2,3,4].map(w=>ckRW.reduce((s,r)=>s+r[w],0));
+  const eW=[0,1,2,3,4].map(w=>ckEW.reduce((s,r)=>s+r[w],0));
+  const aW=[0,1,2,3,4].map(w=>ckAW.reduce((s,r)=>s+r[w],0));
+  const rTot=rW.reduce((a,b)=>a+b,0),eTot=eW.reduce((a,b)=>a+b,0),aTot=aW.reduce((a,b)=>a+b,0);
+  const rWTgt=rMonth/4, eWTgt=Math.ceil(eMonth/4), aWTgt=Math.ceil(aMonth/4);
+  function sumRow(icon,name,month,done,w,wtgt,isMoney){
+    const rate=(done/month*100).toFixed(1);
+    const rc=rate>=80?'var(--green)':rate>=50?'var(--orange)':'var(--red)';
+    let h=`<tr><td><div class="metric-name">${icon} ${name}</div></td>`;
+    h+=`<td style="font-weight:700">${isMoney?'¥':''}${fmt(month)}</td>`;
+    h+=`<td style="font-weight:700;color:${rc}">${isMoney?'¥':''}${fmt(done)}</td>`;
+    w.forEach(v=>{h+=`<td>${cell(v,wtgt,isMoney)}</td>`});
+    h+=`<td style="font-weight:800;color:${rc};font-size:14px">${rate}%</td></tr>`;
+    return h;
+  }
+  let h='';
+  h+=sumRow('💰','续费',rMonth,s.xf_month,rW,rWTgt,true);
+  h+=sumRow('📖','学历单',eMonth,s.xl_month,eW,eWTgt,false);
+  h+=sumRow('📁','档案',aMonth,s.da_month,aW,aWTgt,false);
+  document.getElementById('ckSum').innerHTML=h;
+})();
+
+// 自考 成交明细
+(function(){
+  const data=zkN.map(n=>{
+    const p=DD['自考'][n];
+    const xf=p.xf_w[5], xl=p.xl_w[5], da=p.da_w[5];
+    const r=RD['自考'][n]||{yd:0,yd24h:0,tf:0};
+    const xfStr=xf>0?'¥'+fmt(xf):'¥0';
+    return [n, xfStr, xl, da, 0, r.yd, r.yd24h, r.tf];
+  });
+  let h='';
+  data.forEach(r=>{
+    h+='<tr>';
+    r.forEach((v,i)=>{
+      const cls=(v==='—'||v==='¥0')?'cz':'';
+      const isRisk=(i===5||i===6)&&typeof v==='number'&&v>0;
+      const style=i===0?'font-weight:600':(isRisk?'color:var(--red);font-weight:600':'');
+      h+=`<td class="${cls}" style="${style}">${v}</td>`;
+    });
+    h+='</tr>';
+  });
+  const s=TS['自考'];
+  const totalXf=zkN.reduce((s,n)=>s+DD['自考'][n].xf_w[5],0);
+  const totalXl=s.xl_month, totalDa=s.da_month;
+  const totalYd=RISK['自考'].yd, totalYd24=RISK['自考'].yd24h, totalTf=RISK['自考'].tf;
+  h+=`<tr class="tr-total"><td>📊 合计</td><td style="font-weight:800">¥${fmt(s.xf_month)}</td><td>${totalXl}</td><td>${totalDa}</td><td>${totalXl+totalDa}</td><td style="color:var(--red);font-weight:700">${totalYd}</td><td style="color:var(--orange);font-weight:700">${totalYd24}</td><td style="color:var(--red);font-weight:700">${totalTf}</td></tr>`;
+  document.getElementById('zkDeal').innerHTML=h;
+})();
+
+// 自考 异动退费汇总
+(function(){
+  const r=RISK['自考'];
+  const totalYd=RISK['成考'].yd+RISK['自考'].yd+RISK['网电'].yd;
+  const totalYd24=RISK['成考'].yd24h+RISK['自考'].yd24h+RISK['网电'].yd24h;
+  const totalTf=RISK['成考'].tf+RISK['自考'].tf+RISK['网电'].tf;
+  const riskLevel=r.yd>50?'高风险':r.yd>20?'需关注':'高风险';
+  const riskCls=r.yd>50?'no':r.yd>20?'wr':'no';
+  let h='';
+  h+=`<tr><td style="font-weight:700">自考团队</td>`;
+  h+=`<td style="font-weight:800;color:var(--red);font-size:15px">${r.yd}</td>`;
+  h+=`<td style="font-weight:700;color:var(--orange)">${r.yd24h}</td>`;
+  h+=`<td style="font-weight:800;color:var(--red);font-size:15px">${r.tf}</td>`;
+  h+=`<td><span class="bg ${riskCls}">${riskLevel}</span></td></tr>`;
+  h+=`<tr class="tr-total"><td>📊 三板块合计</td><td style="font-size:14px">${totalYd}</td><td style="font-size:14px">${totalYd24}</td><td style="font-size:14px">${totalTf}</td><td>—</td></tr>`;
+  document.getElementById('zkRisk').innerHTML=h;
+})();
+
+// 自考 达成率
+(function(){
+  const data=zkN.map(n=>{
+    const mt=zkMT[n], p=DD['自考'][n];
+    const rate=p.xf_w[5]/mt.xf*100;
+    return [n, mt.xf, p.xf_w[5], rate, p.xl_w[5], p.da_w[5]];
+  });
+  let h='';
+  data.forEach(r=>{
+    const rc=r[3]>=100?'ach-good':r[3]>=70?'ach-warn':'ach-bad';
+    h+='<tr>';
+    h+=`<td>${r[0]}</td><td class="cm">¥${fmt(r[1])}</td><td class="cm" style="font-weight:700">¥${fmt(r[2])}</td>`;
+    h+=`<td class="ach-rate ${rc}">${r[3].toFixed(1)}%</td>`;
+    const eMet=r[4]>=2;
+    h+=`<td style="color:${eMet?'var(--green)':r[4]>0?'var(--orange)':'var(--red)'}; font-weight:700">${r[4]} <span style="font-size:10px">${eMet?'✓':'✗'}</span></td>`;
+    const aMet=r[5]>=3;
+    h+=`<td style="color:${aMet?'var(--green)':r[5]>0?'var(--orange)':'var(--red)'}; font-weight:700">${r[5]} <span style="font-size:10px">${aMet?'✓':'✗'}</span></td>`;
+    h+='</tr>';
+  });
+  const s=TS['自考'];
+  const tRate=s.xf_month/s.xf_target*100;
+  h+=`<tr class="tr-total"><td>📊 合计</td><td class="cm">¥${fmt(s.xf_target)}</td><td class="cm">¥${fmt(s.xf_month)}</td><td class="ach-rate ${tRate>=100?'ach-good':tRate>=70?'ach-warn':'ach-bad'}">${tRate.toFixed(1)}%</td><td style="font-weight:800">${s.xl_month}</td><td style="font-weight:800">${s.da_month}</td></tr>`;
+  document.getElementById('zkAch').innerHTML=h;
+})();
+
+// 自考 团队周汇总
+(function(){
+  const s=TS['自考'];
+  const eMonth=s.xl_target,aMonth=s.da_target;
+  const eW=[0,1,2,3,4].map(w=>zkEW.reduce((s,r)=>s+r[w],0));
+  const aW=[0,1,2,3,4].map(w=>zkAW.reduce((s,r)=>s+r[w],0));
+  const eTot=eW.reduce((a,b)=>a+b,0),aTot=aW.reduce((a,b)=>a+b,0);
+  const eWTgt=Math.ceil(eMonth/4),aWTgt=Math.ceil(aMonth/4);
+  function sumRow(icon,name,month,done,w,wtgt){
+    const rate=month>0?(done/month*100).toFixed(1):'0.0';
+    const rc=rate>=80?'var(--green)':rate>=50?'var(--orange)':'var(--red)';
+    let h=`<tr><td><div class="metric-name">${icon} ${name}</div></td>`;
+    h+=`<td style="font-weight:700">${month}</td>`;
+    h+=`<td style="font-weight:700;color:${rc}">${done}</td>`;
+    w.forEach(v=>{h+=`<td>${cell(v,wtgt,false)}</td>`});
+    h+=`<td style="font-weight:800;color:${rc};font-size:14px">${rate}%</td></tr>`;
+    return h;
+  }
+  let h='';
+  h+=sumRow('📖','学历单',eMonth,s.xl_month,eW,eWTgt);
+  h+=sumRow('📁','论文档案',aMonth,s.da_month,aW,aWTgt);
+  document.getElementById('zkSum').innerHTML=h;
+})();
+
+// 网电 成交明细
+(function(){
+  const data=wdN.map(n=>{
+    const p=DD['网电'][n];
+    const xf=p.xf_w[5], xl=p.xl_w[5];
+    const r=RD['网电'][n]||{yd:0,yd24h:0,tf:0};
+    return [n, '¥'+fmt(xf), xl, xl, r.yd, r.yd24h, r.tf];
+  });
+  let h='';
+  data.forEach(r=>{
+    h+='<tr>';
+    r.forEach((v,i)=>{
+      const isRisk=(i===4||i===5||i===6)&&typeof v==='number'&&v>0;
+      h+=`<td style="${i===0?'font-weight:600':(isRisk?'color:var(--red);font-weight:600':'')}">${v}</td>`;
+    });
+    h+='</tr>';
+  });
+  const s=TS['网电'];
+  h+=`<tr class="tr-total"><td>📊 合计</td><td style="font-weight:800">¥${fmt(s.xf_month)}</td><td>${s.xl_month}</td><td>${s.xl_month}</td><td style="color:var(--red);font-weight:700">${RISK['网电'].yd}</td><td style="color:var(--orange);font-weight:700">${RISK['网电'].yd24h}</td><td style="color:var(--red);font-weight:700">${RISK['网电'].tf}</td></tr>`;
+  document.getElementById('wdDeal').innerHTML=h;
+})();
+
+// 网电 异动退费汇总
+(function(){
+  const r=RISK['网电'];
+  const totalYd=RISK['成考'].yd+RISK['自考'].yd+RISK['网电'].yd;
+  const totalYd24=RISK['成考'].yd24h+RISK['自考'].yd24h+RISK['网电'].yd24h;
+  const totalTf=RISK['成考'].tf+RISK['自考'].tf+RISK['网电'].tf;
+  const riskLevel=r.yd>50?'高风险':r.yd>10?'需关注':'需关注';
+  const riskCls=r.yd>50?'no':'wr';
+  let h='';
+  h+=`<tr><td style="font-weight:700">网电团队</td>`;
+  h+=`<td style="font-weight:800;color:var(--red);font-size:15px">${r.yd}</td>`;
+  h+=`<td style="font-weight:700;color:var(--orange)">${r.yd24h}</td>`;
+  h+=`<td style="font-weight:800;color:var(--red);font-size:15px">${r.tf}</td>`;
+  h+=`<td><span class="bg ${riskCls}">${riskLevel}</span></td></tr>`;
+  h+=`<tr class="tr-total"><td>📊 三板块合计</td><td style="font-size:14px">${totalYd}</td><td style="font-size:14px">${totalYd24}</td><td style="font-size:14px">${totalTf}</td><td>—</td></tr>`;
+  document.getElementById('wdRisk').innerHTML=h;
+})();
+
+// 网电 达成率
+(function(){
+  const data=wdN.map(n=>{
+    const mt=wdMT[n], p=DD['网电'][n];
+    const rate=p.xf_w[5]/mt.xf*100;
+    return [n, mt.xf, p.xf_w[5], rate, p.xl_w[5]];
+  });
+  let h='';
+  data.forEach(r=>{
+    const rc=r[3]>=100?'ach-good':r[3]>=70?'ach-warn':'ach-bad';
+    h+='<tr>';
+    h+=`<td>${r[0]}</td><td class="cm">¥${fmt(r[1])}</td><td class="cm" style="font-weight:700">¥${fmt(r[2])}</td>`;
+    h+=`<td class="ach-rate ${rc}">${r[3].toFixed(1)}%</td>`;
+    const eMet=r[4]>=wdMT[wdN[data.indexOf(r)]].xl;
+    h+=`<td style="color:${eMet?'var(--green)':r[4]>0?'var(--orange)':'var(--red)'}; font-weight:700">${r[4]} <span style="font-size:10px">${eMet?'✓':'✗'}</span></td>`;
+    h+='</tr>';
+  });
+  const s=TS['网电'];
+  const tRate=s.xf_month/s.xf_target*100;
+  h+=`<tr class="tr-total"><td>📊 合计</td><td class="cm">¥${fmt(s.xf_target)}</td><td class="cm">¥${fmt(s.xf_month)}</td><td class="ach-rate ${tRate>=100?'ach-good':tRate>=70?'ach-warn':'ach-bad'}">${tRate.toFixed(1)}%</td><td style="font-weight:800${s.xl_month>=s.xl_target?';color:var(--green)':''}">${s.xl_month} ${s.xl_month>=s.xl_target?'✓':''}</td></tr>`;
+  document.getElementById('wdAch').innerHTML=h;
+})();
+
+// 网电 团队周汇总
+(function(){
+  const s=TS['网电'];
+  const eMonth=s.xl_target;
+  const eW=[0,1,2,3,4].map(w=>wdEW.reduce((s,r)=>s+r[w],0));
+  const eTot=eW.reduce((a,b)=>a+b,0);
+  const eWTgt=Math.ceil(eMonth/4);
+  const rate=eMonth>0?(eTot/eMonth*100).toFixed(1):'0.0';
+  const rc=rate>=80?'var(--green)':rate>=50?'var(--orange)':'var(--red)';
+  let h=`<tr><td><div class="metric-name">📖 学历单</div></td><td style="font-weight:700">${eMonth}</td><td style="font-weight:700;color:${rate>=100?'var(--green)':rc}">${eTot}${rate>=100?' ✅':''}</td>`;
+  eW.forEach(v=>{h+=`<td>${cell(v,eWTgt,false)}</td>`});
+  h+=`<td style="font-weight:800;color:${rc};font-size:14px">${rate}%${rate>=100?' ✅':''}</td></tr>`;
+  h+=`<tr><td><div class="metric-name">📁 档案单</div></td><td class="cz">—</td><td class="cz">0</td><td class="cz" colspan="5">不涉及</td><td class="cz">—</td></tr>`;
+  document.getElementById('wdSum').innerHTML=h;
+})();
+
+// ============ SUMMARY CARDS ============
+(function(){
+  function mkCard(label,actual,target,unit,color,dotColor){
+    const pct=target>0?(actual/target*100):0;
+    const done=pct>=100;
+    const c=done?'var(--green)':color;
+    const s=done?`目标 ${fmt(target)}${unit} ✅`:`目标 ${fmt(target)}${unit}`;
+    const v=unit==='元'?'¥'+fmt(actual):fmt(actual)+' '+unit.replace('元','');
+    return {l:label,v:v,s:s,p:pct,c:c,d:dotColor||c};
+  }
+  const s1=TS['成考'],s2=TS['自考'],s3=TS['网电'];
+  const totalXf=s1.xf_month+s2.xf_month+s3.xf_month;
+  const totalXfTarget=s1.xf_target+s2.xf_target+s3.xf_target;
+  const totalXl=s1.xl_month+s2.xl_month+s3.xl_month;
+  const totalXlTarget=s1.xl_target+s2.xl_target+s3.xl_target;
+  const totalDa=s1.da_month+s2.da_month+s3.da_month;
+  const totalDaTarget=s1.da_target+s2.da_target+s3.da_target;
+  const cards=[
+    {l:'🔥 三板块续费合计',v:'¥'+fmt(totalXf),s:'目标 ¥'+fmt(totalXfTarget),p:totalXf/totalXfTarget*100,c:totalXf>=totalXfTarget?'var(--green)':'var(--orange)',d:'var(--orange)',lg:1},
+    {l:'🔥 三板块学历合计',v:totalXl+' 单',s:'目标 '+totalXlTarget+' 单',p:totalXl/totalXlTarget*100,c:totalXl>=totalXlTarget?'var(--green)':'var(--orange)',d:'var(--orange)',lg:1},
+    {l:'🔥 三板块档案合计',v:totalDa+' 份',s:'目标 '+totalDaTarget+' 份',p:totalDa/totalDaTarget*100,c:totalDa>=totalDaTarget?'var(--green)':'var(--cyan)',d:'var(--cyan)',lg:1},
+    {l:'成考续费',v:'¥'+fmt(s1.xf_month),s:'目标 ¥'+fmt(s1.xf_target),p:s1.xf_month/s1.xf_target*100,c:s1.xf_month>=s1.xf_target?'var(--green)':'var(--orange)',d:'var(--orange)'},
+    {l:'成考学历',v:s1.xl_month+' 单',s:'目标 '+s1.xl_target+' 单',p:s1.xl_month/s1.xl_target*100,c:s1.xl_month>=s1.xl_target?'var(--green)':'var(--orange)',d:'var(--orange)'},
+    {l:'成考档案',v:s1.da_month+' 份',s:'目标 '+s1.da_target+' 份',p:s1.da_month/s1.da_target*100,c:s1.da_month>=s1.da_target?'var(--green)':'var(--cyan)',d:'var(--cyan)'},
+    {l:'自考续费',v:'¥'+fmt(Math.round(s2.xf_month)),s:'目标 ¥'+fmt(s2.xf_target),p:s2.xf_month/s2.xf_target*100,c:s2.xf_month>=s2.xf_target?'var(--green)':'var(--purple)',d:'var(--purple)'},
+    {l:'自考学历',v:s2.xl_month+' 单',s:'目标 '+s2.xl_target+' 单',p:s2.xl_month/s2.xl_target*100,c:s2.xl_month>=s2.xl_target?'var(--green)':'var(--green)',d:'var(--green)'},
+    {l:'自考档案',v:s2.da_month+' 份',s:'目标 '+s2.da_target+' 份',p:s2.da_month/s2.da_target*100,c:s2.da_month>=s2.da_target?'var(--green)':'var(--cyan)',d:'var(--cyan)'},
+    {l:'网电续费',v:'¥'+fmt(s3.xf_month),s:'目标 ¥'+fmt(s3.xf_target)+(s3.xf_month>=s3.xf_target?' ✅':''),p:s3.xf_month/s3.xf_target*100,c:s3.xf_month>=s3.xf_target?'var(--green)':'var(--orange)',d:s3.xf_month>=s3.xf_target?'var(--green)':'var(--orange)'},
+    {l:'网电学历',v:s3.xl_month+' 单',s:'目标 '+s3.xl_target+' 单'+(s3.xl_month>=s3.xl_target?' ✅':''),p:s3.xl_month/s3.xl_target*100,c:s3.xl_month>=s3.xl_target?'var(--green)':'var(--orange)',d:s3.xl_month>=s3.xl_target?'var(--green)':'var(--orange)'},
+  ];
+  document.getElementById('sumGrid').innerHTML=cards.map(c=>`
+    <div class="sc${c.lg?' sc-lg':''}">
+      <div class="lb"><span class="dot" style="background:${c.d}"></span>${c.l}</div>
+      <div class="vl" style="color:${c.c}">${c.v}</div>
+      <div class="sv">${c.s}</div>
+      <div class="bb"><div class="bf" style="width:${Math.min(c.p,100)}%;background:${c.c}"></div></div>
+    </div>`).join('');
+})();
+
+// ============ SCORING ENGINE ============
+(function(){
+  const scoreData=[];
+  // Build scoreData from DASHBOARD_DATA
+  for(const board of ['成考','自考','网电']){
+    const names=CFG[board].names;
+    const mt=CFG[board].month_targets;
+    names.forEach(n=>{
+      const p=DD[board][n];
+      const hasDA=board!=='网电';
+      scoreData.push({
+        n:n, t:board,
+        xfTgt:mt[n].xf, xfAct:p.xf_w[5],
+        xlTgt:mt[n].xl, xlAct:p.xl_w[5],
+        daTgt:mt[n].da, daAct:p.da_w[5],
+        xfW:p.xf_w.slice(0,5), xlW:p.xl_w.slice(0,5), daW:p.da_w.slice(0,5),
+        xfD:last5(p.xf_31d), xlD:last5(p.xl_31d), daD:last5(p.da_31d),
+        xfWT:Math.round(mt[n].xf/4),
+        xlWT:Math.ceil(mt[n].xl/4),
+        daWT:Math.ceil(mt[n].da/4)
+      });
+    });
+  }
+
+  function calcScore(p){
+    const xfRate=p.xfTgt>0?p.xfAct/p.xfTgt:0;
+    const d1=Math.min(xfRate/1.2,1);
+    let d2=0;
+    if(p.xlTgt>0){d2=Math.min(p.xlAct/(p.xlTgt*1.5),1)}
+    else{d2=p.xlAct>0?1:0}
+    let d3=0,hasDA=p.t!=='网电';
+    if(hasDA){
+      if(p.daTgt>0){d3=Math.min(p.daAct/(p.daTgt*1.5),1)}
+      else{d3=p.daAct>0?1:0}
+    }
+    const xfMW=p.xfW.filter(v=>v>=p.xfWT).length;
+    const d4=xfMW/5;
+    const avg4=p.xfW.slice(0,4).reduce((a,b)=>a+b,0)/4;
+    let d5=0;
+    if(avg4>0){const ratio=p.xfW[4]/avg4;d5=Math.min(Math.max(ratio/2,0),1)}
+    else if(p.xfW[4]>0){d5=1}
+    const xfDD=p.xfD.filter(v=>v>=p.xfWT/5).length;
+    const xlDD=p.xlD.filter(v=>v>=Math.max(p.xlWT,1)).length;
+    let totalHit=xfDD+xlDD,totalChance=10;
+    if(hasDA){const daDD=p.daD.filter(v=>v>=Math.max(p.daWT,1)).length;totalHit+=daDD;totalChance=15}
+    const d6=totalHit/totalChance;
+
+    let scores,weights,dims;
+    if(hasDA){
+      weights=[20,20,15,15,15,15];
+      scores=[d1*20,d2*20,d3*15,d4*15,d5*15,d6*15];
+      dims=['续费达成','学历产出','档案执行','周稳定性','冲刺能力','日达标率'];
+    }else{
+      weights=[25,20,0,15,15,15];
+      scores=[d1*25,d2*20,0,d4*15,d5*15,d6*15];
+      dims=['续费达成','学历产出','—','周稳定性','冲刺能力','日达标率'];
+    }
+    const total=scores.reduce((a,b)=>a+b,0);
+    const raws=[d1,d2,d3,d4,d5,d6];
+    const grade=total>=85?'A':total>=70?'B':total>=55?'C':total>=40?'D':'F';
+    return{scores,total,grade,dims,raws,weights};
+  }
+
+  const allScores=scoreData.map(p=>({...p,...calcScore(p)}));
+  const ranked=[...allScores].sort((a,b)=>b.total-a.total);
+
+  const medals=['🥇','🥈','🥉'];
+  let rh='';
+  ranked.forEach((p,i)=>{
+    const gc='grade-'+p.grade.toLowerCase();
+    rh+='<tr>';
+    rh+=`<td class="rank-num">${i<3?`<span class="rank-medal">${medals[i]}</span>`:(i+1)}</td>`;
+    rh+=`<td style="font-weight:700">${p.n}</td>`;
+    rh+=`<td style="color:var(--text2)">${p.t}</td>`;
+    rh+=`<td style="font-weight:800;font-size:15px;color:${p.total>=70?'var(--green)':p.total>=55?'var(--orange)':'var(--red)'}">${p.total.toFixed(1)}</td>`;
+    rh+=`<td class="${gc}" style="font-weight:900;font-size:16px">${p.grade}</td>`;
+    for(let j=0;j<6;j++){
+      const v=p.scores[j],w=p.weights[j];
+      if(w===0){rh+='<td class="cz">—</td>'}
+      else{
+        const c=v>=w*0.8?'var(--green)':v>=w*0.5?'var(--orange)':'var(--red)';
+        rh+=`<td style="color:${c};font-weight:600">${v.toFixed(1)}<span style="font-size:9px;color:var(--text3)">/${w}</span></td>`;
+      }
+    }
+    rh+='</tr>';
+  });
+  document.getElementById('rankBody').innerHTML=rh;
+
+  const teams={'成考':allScores.filter(p=>p.t==='成考'),'自考':allScores.filter(p=>p.t==='自考'),'网电':allScores.filter(p=>p.t==='网电')};
+  let avgH='';
+  for(const[tn,members] of Object.entries(teams)){
+    const avg=members.reduce((s,p)=>s+p.total,0)/members.length;
+    const grade=avg>=85?'A':avg>=70?'B':avg>=55?'C':avg>=40?'D':'F';
+    const gc='grade-'+grade.toLowerCase();
+    const dimAvgs=[];
+    for(let j=0;j<6;j++){dimAvgs.push(members.reduce((s,p)=>s+p.scores[j],0)/members.length)}
+    avgH+=`<div class="team-avg-card"><h4>${tn}团队均分 <span style="font-size:20px;font-weight:900;margin-left:8px" class="${gc}">${avg.toFixed(1)}</span> <span class="${gc}" style="font-weight:900;font-size:16px">${grade}</span></h4><div class="sc-dims">`;
+    const dimNames=['续费达成','学历产出','档案执行','周稳定性','冲刺能力','日达标率'];
+    const dimWeights=tn==='网电'?[25,20,0,15,15,15]:[20,20,15,15,15,15];
+    for(let j=0;j<6;j++){
+      if(dimWeights[j]===0)continue;
+      const pct=(dimAvgs[j]/dimWeights[j]*100).toFixed(0);
+      const c=dimAvgs[j]>=dimWeights[j]*0.8?'var(--green)':dimAvgs[j]>=dimWeights[j]*0.5?'var(--orange)':'var(--red)';
+      avgH+=`<div class="sc-dim"><span class="dl">${dimNames[j]}</span><div class="dbar"><div class="dfill" style="width:${pct}%;background:${c}"></div></div><span class="dv" style="color:${c}">${dimAvgs[j].toFixed(1)}</span></div>`;
+    }
+    avgH+='</div></div>';
+  }
+  document.getElementById('teamAvgArea').innerHTML=avgH;
+
+  function renderCards(containerId,members){
+    let h='';
+    members.forEach(p=>{
+      const gc='grade-'+p.grade.toLowerCase();
+      const scoreColor=p.total>=85?'var(--green)':p.total>=70?'#60a5fa':p.total>=55?'var(--orange)':p.total>=40?'#fb923c':'var(--red)';
+      h+=`<div class="score-card"><div class="sc-head"><div><span class="sc-name">${p.n}</span><span class="sc-team">${p.t}</span></div>`;
+      h+=`<div class="score-badge"><span class="pts" style="color:${scoreColor}">${p.total.toFixed(1)}</span><span class="grade ${gc}">${p.grade}</span></div></div>`;
+      h+='<div class="sc-dims">';
+      for(let j=0;j<6;j++){
+        if(p.weights[j]===0)continue;
+        const pct=(p.scores[j]/p.weights[j]*100).toFixed(0);
+        const c=p.scores[j]>=p.weights[j]*0.8?'var(--green)':p.scores[j]>=p.weights[j]*0.5?'var(--orange)':'var(--red)';
+        h+=`<div class="sc-dim"><span class="dl">${p.dims[j]}</span><div class="dbar"><div class="dfill" style="width:${pct}%;background:${c}"></div></div><span class="dv" style="color:${c}">${p.scores[j].toFixed(1)}</span></div>`;
+      }
+      h+='</div></div>';
+    });
+    document.getElementById(containerId).innerHTML=h;
+  }
+  renderCards('scoreCK',allScores.filter(p=>p.t==='成考'));
+  renderCards('scoreZK',allScores.filter(p=>p.t==='自考'));
+  renderCards('scoreWD',allScores.filter(p=>p.t==='网电'));
+})();
+</script>
+</body>
+</html>
