@@ -440,7 +440,7 @@ function weekValues(arr){
 // Fill date headers dynamically
 (function(){
   const dates=weekDates();
-  document.querySelectorAll('th.dh').forEach((el,i)=>{el.textContent=dates[i]||'';});
+  document.querySelectorAll('th.dh').forEach((el,i)=>{el.textContent=dates[i%dates.length]||'';});
 })();
 
 // ============ 成考 DATA ============
