@@ -407,7 +407,7 @@ function last5(arr){
 }
 function last5dates(){
   // Find latest non-zero day across all people and all fields
-  let globalLn=29; // default to day 30 (Jul 30)
+  let globalLn=0; // default to day 1 (Aug)
   for(const board of ['成考','自考','网电']){
     for(const name of CFG[board].names){
       const p=DD[board][name];
@@ -418,7 +418,7 @@ function last5dates(){
     }
   }
   const s=Math.max(0,globalLn-4);
-  const labels=[];for(let i=s;i<s+5;i++)labels.push('7/'+(i+1));
+  const labels=[];for(let i=s;i<s+5;i++)labels.push('8/'+(i+1));
   return labels;
 }
 // Fill date headers dynamically
