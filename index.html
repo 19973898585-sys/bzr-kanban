@@ -154,7 +154,7 @@ tbody tr:last-child td{border-bottom:none}
 
 <div class="hdr">
   <h1>📊 班主任管理驾驶舱</h1>
-  <div class="sub">学历教育 · 续费 & 学历 & 档案全维度追踪</div>
+  <div class="sub">学历教育 · 续费 & 学历 & 其他单全维度追踪</div>
   <div class="db"><div class="n" id="hdrDate">--.--</div><div class="l" id="hdrWeek">加载中</div></div>
 </div>
 
@@ -178,7 +178,7 @@ tbody tr:last-child td{border-bottom:none}
   <div class="sec">
     <div class="sh"><div class="si" style="background:var(--purple-bg);color:var(--purple)">📋</div><div><h3>成考 · 成交明细汇总</h3><div class="sd">各人订单类型分布（7月累计）</div></div></div>
     <div class="tw"><table class="ach-table">
-      <thead><tr><th>姓名</th><th>学历单</th><th>论文</th><th>档案</th><th>其他订单</th><th>异动</th><th>退费</th><th>合计</th></tr></thead>
+      <thead><tr><th>姓名</th><th>学历单</th><th>论文</th><th>其他单</th><th>其他订单</th><th>异动</th><th>退费</th><th>合计</th></tr></thead>
       <tbody id="ckDeal"></tbody>
     </table></div>
   </div>
@@ -194,18 +194,18 @@ tbody tr:last-child td{border-bottom:none}
 
   <!-- 个人目标vs实际 -->
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">📊</div><div><h3>成考 · 个人月度目标 vs 实际</h3><div class="sd">续费 / 学历 / 档案 三维达成率</div></div></div>
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">📊</div><div><h3>成考 · 个人月度目标 vs 实际</h3><div class="sd">续费 / 学历 / 其他单 三维达成率</div></div></div>
     <div class="tw"><table class="ach-table">
-      <thead><tr><th>姓名</th><th>续费目标</th><th>续费实际</th><th>达成率</th><th>学历目标</th><th>学历实际</th><th>档案目标</th><th>档案实际</th></tr></thead>
+      <thead><tr><th>姓名</th><th>续费目标</th><th>续费实际</th><th>达成率</th><th>学历目标</th><th>学历实际</th><th>其他单目标</th><th>其他单实际</th></tr></thead>
       <tbody id="ckAch"></tbody>
     </table></div>
   </div>
 
   <!-- 团队指标周汇总 -->
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>成考 · 团队指标周完成情况</h3><div class="sd">续费 / 学历 / 档案 五周趋势</div></div></div>
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>成考 · 团队指标周完成情况</h3><div class="sd">续费 / 学历 / 其他单 四周趋势</div></div></div>
     <div class="tw"><table class="sum-table">
-      <thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周<br><span style="font-weight:400">7/1-5</span></th><th>第二周<br><span style="font-weight:400">7/6-12</span></th><th>第三周<br><span style="font-weight:400">7/13-19</span></th><th>第四周<br><span style="font-weight:400">7/20-26</span></th><th>第五周<br><span style="font-weight:400">7/27-31</span></th><th>达成率</th></tr></thead>
+      <thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周<br><span style="font-weight:400">8.3-8.8</span></th><th>第二周<br><span style="font-weight:400">8.10-8.14</span></th><th>第三周<br><span style="font-weight:400">8.17-8.22</span></th><th>第四周<br><span style="font-weight:400">8.24-8.28</span></th><th>达成率</th></tr></thead>
       <tbody id="ckSum"></tbody>
     </table></div>
   </div>
@@ -213,32 +213,32 @@ tbody tr:last-child td{border-bottom:none}
   <!-- 周续费 -->
   <div class="sec">
     <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>成考 · 个人续费周明细</h3><div class="sd">周目标 = 月目标 ÷ 4</div></div></div>
-    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckRW"></tbody></table></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckRW"></tbody></table></div>
   </div>
   <!-- 周学历 -->
   <div class="sec">
     <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>成考 · 个人学历单周明细</h3><div class="sd">周目标 = 月目标 ÷ 4（向上取整）</div></div></div>
-    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckEW"></tbody></table></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckEW"></tbody></table></div>
   </div>
-  <!-- 周档案 -->
+  <!-- 周其他单 -->
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>成考 · 个人档案周明细</h3><div class="sd">周目标 = 月目标 ÷ 4（向上取整）</div></div></div>
-    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckAW"></tbody></table></div>
+    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>成考 · 个人其他周明细</h3><div class="sd">周目标 = 月目标 ÷ 4（向上取整）</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="ckAW"></tbody></table></div>
   </div>
   <!-- 日续费 -->
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>成考 · 个人续费日明细（第五周）</h3><div class="sd">日目标 = 月目标 ÷ 20 工作日</div></div></div>
-    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckRD"></tbody></table></div>
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>成考 · 个人续费日明细（第一周 8.3-8.8）</h3><div class="sd">日目标 = 月目标 ÷ 22 工作日</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th class="dh d5"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckRD"></tbody></table></div>
   </div>
   <!-- 日学历 -->
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>成考 · 个人学历单日明细（第五周）</h3><div class="sd">日目标 = max(1, 月目标 ÷ 20)</div></div></div>
-    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckED"></tbody></table></div>
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>成考 · 个人学历单日明细（第一周 8.3-8.8）</h3><div class="sd">日目标 = max(1, 月目标 ÷ 22)</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th class="dh d5"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckED"></tbody></table></div>
   </div>
-  <!-- 日档案 -->
+  <!-- 日其他单 -->
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>成考 · 个人档案日明细（第五周）</h3><div class="sd">日目标 = max(1, 月目标 ÷ 20)</div></div></div>
-    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckAD"></tbody></table></div>
+    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>成考 · 个人其他单日明细（第一周 8.3-8.8）</h3><div class="sd">日目标 = max(1, 月目标 ÷ 22)</div></div></div>
+    <div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th class="dh d5"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="ckAD"></tbody></table></div>
   </div>
 </div>
 
@@ -260,19 +260,19 @@ tbody tr:last-child td{border-bottom:none}
     </table></div>
   </div>
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">📊</div><div><h3>自考 · 个人月度目标 vs 实际</h3><div class="sd">续费 / 学历 / 档案 达成率</div></div></div>
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">📊</div><div><h3>自考 · 个人月度目标 vs 实际</h3><div class="sd">续费 / 学历 / 其他单 达成率</div></div></div>
     <div class="tw"><table class="ach-table"><thead><tr><th>姓名</th><th>续费目标</th><th>续费实际</th><th>达成率</th><th>学历实际</th><th>论文档案</th></tr></thead><tbody id="zkAch"></tbody></table></div>
   </div>
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>自考 · 团队指标周完成情况</h3><div class="sd">学历 / 档案 五周趋势</div></div></div>
-    <div class="tw"><table class="sum-table"><thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>达成率</th></tr></thead><tbody id="zkSum"></tbody></table></div>
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>自考 · 团队指标周完成情况</h3><div class="sd">学历 / 其他单 四周趋势</div></div></div>
+    <div class="tw"><table class="sum-table"><thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>达成率</th></tr></thead><tbody id="zkSum"></tbody></table></div>
   </div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>自考 · 个人续费周明细</h3><div class="sd">周目标 = ¥60,000 ÷ 4 = ¥15,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkRW"></tbody></table></div></div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>自考 · 个人学历单周明细</h3><div class="sd">学历单个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkEW"></tbody></table></div></div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>自考 · 个人档案周明细</h3><div class="sd">档案个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkAW"></tbody></table></div></div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>自考 · 个人续费日明细（第五周）</h3><div class="sd">日目标 = ¥60,000 ÷ 20 = ¥3,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkRD"></tbody></table></div></div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>自考 · 个人学历单日明细（第五周）</h3><div class="sd">本周学历每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkED"></tbody></table></div></div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>自考 · 个人档案日明细（第五周）</h3><div class="sd">本周档案每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkAD"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>自考 · 个人续费周明细</h3><div class="sd">周目标 = ¥60,000 ÷ 4 = ¥15,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkRW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>自考 · 个人学历单周明细</h3><div class="sd">学历单个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkEW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>自考 · 个人其他周明细</h3><div class="sd">其他单个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="zkAW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>自考 · 个人续费日明细（第一周 8.3-8.8）</h3><div class="sd">日目标 = ¥60,000 ÷ 22 ≈ ¥2,727</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th class="dh d5"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkRD"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>自考 · 个人学历单日明细（第一周 8.3-8.8）</h3><div class="sd">本周学历每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th class="dh d5"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkED"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">📁</div><div><h3>自考 · 个人其他单日明细（第一周 8.3-8.8）</h3><div class="sd">本周其他单每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th class="dh d5"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="zkAD"></tbody></table></div></div>
 </div>
 
 <!-- ===== 网电 ===== -->
@@ -297,21 +297,21 @@ tbody tr:last-child td{border-bottom:none}
     <div class="tw"><table class="ach-table"><thead><tr><th>姓名</th><th>续费目标</th><th>续费实际</th><th>达成率</th><th>学历实际</th></tr></thead><tbody id="wdAch"></tbody></table></div>
   </div>
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>网电 · 团队指标周完成情况</h3><div class="sd">学历 五周趋势（不涉及档案）</div></div></div>
-    <div class="tw"><table class="sum-table"><thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>达成率</th></tr></thead><tbody id="wdSum"></tbody></table></div>
+    <div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📈</div><div><h3>网电 · 团队指标周完成情况</h3><div class="sd">学历 四周趋势（不涉及其他单）</div></div></div>
+    <div class="tw"><table class="sum-table"><thead><tr><th>指标</th><th>月目标</th><th>月完成</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>达成率</th></tr></thead><tbody id="wdSum"></tbody></table></div>
   </div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>网电 · 个人续费周明细</h3><div class="sd">周目标 = ¥40,000 ÷ 4 = ¥10,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="wdRW"></tbody></table></div></div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>网电 · 个人学历单周明细</h3><div class="sd">学历单个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>第五周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="wdEW"></tbody></table></div></div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>网电 · 个人续费日明细（第五周）</h3><div class="sd">日目标 = ¥40,000 ÷ 20 = ¥2,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="wdRD"></tbody></table></div></div>
-  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>网电 · 个人学历单日明细（第五周）</h3><div class="sd">本周学历每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="wdED"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>网电 · 个人续费周明细</h3><div class="sd">周目标 = ¥40,000 ÷ 4 = ¥10,000</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="wdRW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>网电 · 个人学历单周明细</h3><div class="sd">学历单个人目标分配</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>周目标</th><th>第一周</th><th>第二周</th><th>第三周</th><th>第四周</th><th>月累计</th><th>达标周</th></tr></thead><tbody id="wdEW"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">💰</div><div><h3>网电 · 个人续费日明细（第一周 8.3-8.8）</h3><div class="sd">日目标 = ¥40,000 ÷ 22 ≈ ¥1,818</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th class="dh d5"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="wdRD"></tbody></table></div></div>
+  <div class="sec"><div class="sh"><div class="si" style="background:var(--green-bg);color:var(--green)">📖</div><div><h3>网电 · 个人学历单日明细（第一周 8.3-8.8）</h3><div class="sd">本周学历每日完成</div></div></div><div class="tw"><table><thead><tr><th>姓名</th><th>日目标</th><th class="dh d0"></th><th class="dh d1"></th><th class="dh d2"></th><th class="dh d3"></th><th class="dh d4"></th><th class="dh d5"></th><th>周累计</th><th>达标天</th></tr></thead><tbody id="wdED"></tbody></table></div></div>
 </div>
 
 <!-- ===== 能力评分 ===== -->
 <div class="pn" id="p4">
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">🏆</div><div><h3>个人工作能力综合评分</h3><div class="sd">基于续费达成、学历产出、档案执行、周稳定性、冲刺能力、日达标率六维度综合评估</div></div></div>
+    <div class="sh"><div class="si" style="background:var(--accent-glow);color:var(--accent2)">🏆</div><div><h3>个人工作能力综合评分</h3><div class="sd">基于续费达成、学历产出、其他单执行、周稳定性、冲刺能力、日达标率六维度综合评估</div></div></div>
     <div class="tw"><table class="rank-table" style="margin-bottom:18px">
-      <thead><tr><th>排名</th><th>姓名</th><th>板块</th><th>总分</th><th>等级</th><th>续费达成</th><th>学历产出</th><th>档案执行</th><th>周稳定性</th><th>冲刺力</th><th>日达标</th></tr></thead>
+      <thead><tr><th>排名</th><th>姓名</th><th>板块</th><th>总分</th><th>等级</th><th>续费达成</th><th>学历产出</th><th>其他单执行</th><th>周稳定性</th><th>冲刺力</th><th>日达标</th></tr></thead>
       <tbody id="rankBody"></tbody>
     </table></div>
     <div id="teamAvgArea"></div>
@@ -325,7 +325,7 @@ tbody tr:last-child td{border-bottom:none}
     <div class="score-grid" id="scoreZK"></div>
   </div>
   <div class="sec">
-    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">💻</div><div><h3>网电团队 · 能力画像</h3><div class="sd">2人五维评分详情（不涉及档案）</div></div></div>
+    <div class="sh"><div class="si" style="background:var(--cyan-bg);color:var(--cyan)">💻</div><div><h3>网电团队 · 能力画像</h3><div class="sd">2人五维评分详情（不涉及其他单）</div></div></div>
     <div class="score-grid" id="scoreWD"></div>
   </div>
 </div>
@@ -370,26 +370,28 @@ function bw(id,names,tgts,data,money){
 }
 
 function bd(id,names,tgts,data,money){
+  const info=getWeekInfo();
+  const numDays=info.end-info.start+1;
   const tb=document.getElementById(id);let h='';
   names.forEach((n,i)=>{
     const t=tgts[i],vs=data[i],tot=vs.reduce((a,b)=>a+b,0);
     const md=vs.filter(v=>v>=t).length;
-    const tc=tot>=t*5?'var(--green)':tot>0?'var(--orange)':'var(--red)';
+    const tc=tot>=t*numDays?'var(--green)':tot>0?'var(--orange)':'var(--red)';
     h+='<tr>';
     h+=`<td>${n}</td><td style="color:var(--text2);font-weight:600">${money?'¥':''}${fmt(t)}</td>`;
-    vs.forEach(v=>{h+=`<td>${cell(v,t,money)}</td>`});
+    for(let j=0;j<numDays;j++){h+=`<td>${cell(vs[j]||0,t,money)}</td>`}
     h+=`<td style="color:${tc};font-weight:800;font-size:13px">${money?'¥':''}${fmt(tot)}</td>`;
-    h+=`<td><span class="bg ${md>=3?'ok':md>=1?'wr':'no'}">${md}/5</span></td></tr>`;
+    h+=`<td><span class="bg ${md>=3?'ok':md>=1?'wr':'no'}">${md}/${numDays}</span></td></tr>`;
   });
   const tt=tgts.reduce((a,b)=>a+b,0);
-  const td2=[];for(let d=0;d<5;d++)td2.push(data.reduce((s,r)=>s+r[d],0));
+  const td2=[];for(let d=0;d<numDays;d++)td2.push(data.reduce((s,r)=>s+(r[d]||0),0));
   const tTot=td2.reduce((a,b)=>a+b,0);
   const tMD=td2.filter(v=>v>=tt).length;
-  const tc2=tTot>=tt*5?'var(--green)':tTot>0?'var(--orange)':'var(--red)';
+  const tc2=tTot>=tt*numDays?'var(--green)':tTot>0?'var(--orange)':'var(--red)';
   h+=`<tr class="tr-total"><td>📊 团队</td><td>${money?'¥':''}${fmt(tt)}</td>`;
-  td2.forEach(v=>{h+=`<td>${cell(v,tt,money)}</td>`});
+  for(let j=0;j<numDays;j++){h+=`<td>${cell(td2[j]||0,tt,money)}</td>`}
   h+=`<td style="font-size:13px">${money?'¥':''}${fmt(tTot)}</td>`;
-  h+=`<td><span class="bg ${tMD>=3?'ok':tMD>=1?'wr':'no'}">${tMD}/5</span></td></tr>`;
+  h+=`<td><span class="bg ${tMD>=3?'ok':tMD>=1?'wr':'no'}">${tMD}/${numDays}</span></td></tr>`;
   tb.innerHTML=h;
 }
 
@@ -399,32 +401,39 @@ const D=DASHBOARD_DATA, CFG=D.config, DD=D.data, RISK=D.risk, RD=D.risk_detail, 
 // Dynamic date header
 if(D.date_display){document.getElementById('hdrDate').textContent=D.date_display;document.getElementById('hdrWeek').textContent=D.date_sub||'';}
 
-// Helper: get last 5 days from 31-day array
-function last5(arr){
-  let ln=-1;for(let i=30;i>=0;i--){if(arr[i]!==0){ln=i;break;}}
-  if(ln<0)return[0,0,0,0,0];
-  const s=Math.max(0,ln-4);return arr.slice(s,s+5);
-}
-function last5dates(){
-  // Find latest non-zero day across all people and all fields
-  let globalLn=29; // default to day 30 (Jul 30)
-  for(const board of ['成考','自考','网电']){
-    for(const name of CFG[board].names){
-      const p=DD[board][name];
-      for(const field of ['xf_31d','xl_31d','da_31d']){
-        const arr=p[field]||[];
-        for(let i=30;i>=0;i--){if(arr[i]!==0){if(i>globalLn)globalLn=i;break;}}
-      }
-    }
+// Week-based daily detail: show dates within the current week (大小周)
+function getWeekInfo(){
+  const dd=D.data_date;
+  for(let i=0;i<AUG_WEEKS.length;i++){
+    const s=AUG_WEEKS[i][0],e=AUG_WEEKS[i][1];
+    if(dd>=s&&dd<=e) return {wi:i, start:s, end:e};
   }
-  const s=Math.max(0,globalLn-4);
-  const labels=[];for(let i=s;i<s+5;i++)labels.push('7/'+(i+1));
+  if(dd<AUG_WEEKS[0][0]) return {wi:0, start:AUG_WEEKS[0][0], end:AUG_WEEKS[0][1]};
+  const last=AUG_WEEKS[AUG_WEEKS.length-1];
+  return {wi:AUG_WEEKS.length-1, start:last[0], end:last[1]};
+}
+function weekDates(){
+  const info=getWeekInfo();
+  const labels=[];
+  for(let d=info.start; d<=info.end; d++){
+    labels.push('8/'+d);
+  }
+  while(labels.length<6) labels.push('');
   return labels;
+}
+function weekValues(arr){
+  const info=getWeekInfo();
+  const result=[];
+  for(let d=info.start; d<=info.end; d++){
+    result.push(arr[d-1]||0);
+  }
+  while(result.length<6) result.push(0);
+  return result;
 }
 // Fill date headers dynamically
 (function(){
-  const dates=last5dates();
-  document.querySelectorAll('th.dh').forEach((el,i)=>{el.textContent=dates[i%5];});
+  const dates=weekDates();
+  document.querySelectorAll('th.dh').forEach((el,i)=>{el.textContent=dates[i%dates.length]||'';});
 })();
 
 // ============ 成考 DATA ============
@@ -432,41 +441,41 @@ const ckN=CFG['成考'].names, ckMT=CFG['成考'].month_targets;
 const ckRT=ckN.map(n=>Math.round(ckMT[n].xf/4));
 const ckET=ckN.map(n=>Math.ceil(ckMT[n].xl/4));
 const ckAT=ckN.map(n=>Math.ceil(ckMT[n].da/4));
-const ckRW=ckN.map(n=>DD['成考'][n].xf_w.slice(0,5));
-const ckEW=ckN.map(n=>DD['成考'][n].xl_w.slice(0,5));
-const ckAW=ckN.map(n=>DD['成考'][n].da_w.slice(0,5));
-const ckRDT=ckN.map(n=>Math.round(ckMT[n].xf/20));
-const ckEDT=ckN.map(n=>Math.max(1,Math.ceil(ckMT[n].xl/20)));
-const ckADT=ckN.map(n=>Math.max(1,Math.ceil(ckMT[n].da/20)));
-const ckRD=ckN.map(n=>last5(DD['成考'][n].xf_31d));
-const ckED=ckN.map(n=>last5(DD['成考'][n].xl_31d));
-const ckAD=ckN.map(n=>last5(DD['成考'][n].da_31d));
+const ckRW=ckN.map(n=>DD['成考'][n].xf_w.slice(0,4));
+const ckEW=ckN.map(n=>DD['成考'][n].xl_w.slice(0,4));
+const ckAW=ckN.map(n=>DD['成考'][n].da_w.slice(0,4));
+const ckRDT=ckN.map(n=>Math.round(ckMT[n].xf/22));
+const ckEDT=ckN.map(n=>Math.max(1,Math.ceil(ckMT[n].xl/22)));
+const ckADT=ckN.map(n=>Math.max(1,Math.ceil(ckMT[n].da/22)));
+const ckRD=ckN.map(n=>weekValues(DD['成考'][n].xf_31d));
+const ckED=ckN.map(n=>weekValues(DD['成考'][n].xl_31d));
+const ckAD=ckN.map(n=>weekValues(DD['成考'][n].da_31d));
 
 // ============ 自考 DATA ============
 const zkN=CFG['自考'].names, zkMT=CFG['自考'].month_targets;
 const zkRT=zkN.map(n=>Math.round(zkMT[n].xf/4));
 const zkET=zkN.map(n=>Math.ceil(zkMT[n].xl/4));
 const zkAT=zkN.map(n=>Math.ceil(zkMT[n].da/4));
-const zkRW=zkN.map(n=>DD['自考'][n].xf_w.slice(0,5));
-const zkEW=zkN.map(n=>DD['自考'][n].xl_w.slice(0,5));
-const zkAW=zkN.map(n=>DD['自考'][n].da_w.slice(0,5));
+const zkRW=zkN.map(n=>DD['自考'][n].xf_w.slice(0,4));
+const zkEW=zkN.map(n=>DD['自考'][n].xl_w.slice(0,4));
+const zkAW=zkN.map(n=>DD['自考'][n].da_w.slice(0,4));
 const zkRDT=zkN.map(n=>Math.round(zkMT[n].xf/20));
 const zkEDT=zkN.map(n=>Math.max(1,Math.ceil(zkMT[n].xl/20)));
 const zkADT=zkN.map(n=>Math.max(1,Math.ceil(zkMT[n].da/20)));
-const zkRD=zkN.map(n=>last5(DD['自考'][n].xf_31d));
-const zkED=zkN.map(n=>last5(DD['自考'][n].xl_31d));
-const zkAD=zkN.map(n=>last5(DD['自考'][n].da_31d));
+const zkRD=zkN.map(n=>weekValues(DD['自考'][n].xf_31d));
+const zkED=zkN.map(n=>weekValues(DD['自考'][n].xl_31d));
+const zkAD=zkN.map(n=>weekValues(DD['自考'][n].da_31d));
 
 // ============ 网电 DATA ============
 const wdN=CFG['网电'].names, wdMT=CFG['网电'].month_targets;
 const wdRT=wdN.map(n=>Math.round(wdMT[n].xf/4));
 const wdET=wdN.map(n=>Math.ceil(wdMT[n].xl/4));
-const wdRW=wdN.map(n=>DD['网电'][n].xf_w.slice(0,5));
-const wdEW=wdN.map(n=>DD['网电'][n].xl_w.slice(0,5));
+const wdRW=wdN.map(n=>DD['网电'][n].xf_w.slice(0,4));
+const wdEW=wdN.map(n=>DD['网电'][n].xl_w.slice(0,4));
 const wdRDT=wdN.map(n=>Math.round(wdMT[n].xf/20));
 const wdEDT=wdN.map(n=>Math.max(1,Math.ceil(wdMT[n].xl/20)));
-const wdRD=wdN.map(n=>last5(DD['网电'][n].xf_31d));
-const wdED=wdN.map(n=>last5(DD['网电'][n].xl_31d));
+const wdRD=wdN.map(n=>weekValues(DD['网电'][n].xf_31d));
+const wdED=wdN.map(n=>weekValues(DD['网电'][n].xl_31d));
 
 // ============ RENDER TARGET CARDS (top summary) ============
 (function(){
@@ -484,7 +493,7 @@ const wdED=wdN.map(n=>last5(DD['网电'][n].xl_31d));
   document.getElementById('ckTg').innerHTML=
     mkTc('💰','续费目标',s1.xf_target,s1.xf_month,'元','var(--orange)','linear-gradient(90deg,var(--orange),#fbbf24)')+
     mkTc('📖','学历单',s1.xl_target,s1.xl_month,'单','var(--green)','linear-gradient(90deg,#16a34a,var(--green))')+
-    mkTc('📁','档案',s1.da_target,s1.da_month,'份','var(--cyan)','linear-gradient(90deg,#0891b2,var(--cyan))');
+    mkTc('📁','其他单',s1.da_target,s1.da_month,'份','var(--cyan)','linear-gradient(90deg,#0891b2,var(--cyan))');
   // 自考
   const s2=TS['自考'];
   document.getElementById('zkTg').innerHTML=
@@ -617,7 +626,7 @@ bd('wdRD',wdN,wdRDT,wdRD,true);bd('wdED',wdN,wdEDT,wdED,false);
   let h='';
   h+=sumRow('💰','续费',rMonth,s.xf_month,rW,rWTgt,true);
   h+=sumRow('📖','学历单',eMonth,s.xl_month,eW,eWTgt,false);
-  h+=sumRow('📁','档案',aMonth,s.da_month,aW,aWTgt,false);
+  h+=sumRow('📁','其他单',aMonth,s.da_month,aW,aWTgt,false);
   document.getElementById('ckSum').innerHTML=h;
 })();
 
@@ -791,7 +800,7 @@ bd('wdRD',wdN,wdRDT,wdRD,true);bd('wdED',wdN,wdEDT,wdED,false);
   let h=`<tr><td><div class="metric-name">📖 学历单</div></td><td style="font-weight:700">${eMonth}</td><td style="font-weight:700;color:${rate>=100?'var(--green)':rc}">${eTot}${rate>=100?' ✅':''}</td>`;
   eW.forEach(v=>{h+=`<td>${cell(v,eWTgt,false)}</td>`});
   h+=`<td style="font-weight:800;color:${rc};font-size:14px">${rate}%${rate>=100?' ✅':''}</td></tr>`;
-  h+=`<tr><td><div class="metric-name">📁 档案单</div></td><td class="cz">—</td><td class="cz">0</td><td class="cz" colspan="5">不涉及</td><td class="cz">—</td></tr>`;
+  h+=`<tr><td><div class="metric-name">📁 其他单</div></td><td class="cz">—</td><td class="cz">0</td><td class="cz" colspan="5">不涉及</td><td class="cz">—</td></tr>`;
   document.getElementById('wdSum').innerHTML=h;
 })();
 
@@ -815,13 +824,13 @@ bd('wdRD',wdN,wdRDT,wdRD,true);bd('wdED',wdN,wdEDT,wdED,false);
   const cards=[
     {l:'🔥 三板块续费合计',v:'¥'+fmt(totalXf),s:'目标 ¥'+fmt(totalXfTarget),p:totalXf/totalXfTarget*100,c:totalXf>=totalXfTarget?'var(--green)':'var(--orange)',d:'var(--orange)',lg:1},
     {l:'🔥 三板块学历合计',v:totalXl+' 单',s:'目标 '+totalXlTarget+' 单',p:totalXl/totalXlTarget*100,c:totalXl>=totalXlTarget?'var(--green)':'var(--orange)',d:'var(--orange)',lg:1},
-    {l:'🔥 三板块档案合计',v:totalDa+' 份',s:'目标 '+totalDaTarget+' 份',p:totalDa/totalDaTarget*100,c:totalDa>=totalDaTarget?'var(--green)':'var(--cyan)',d:'var(--cyan)',lg:1},
+    {l:'🔥 三板块其他单合计',v:totalDa+' 份',s:'目标 '+totalDaTarget+' 份',p:totalDa/totalDaTarget*100,c:totalDa>=totalDaTarget?'var(--green)':'var(--cyan)',d:'var(--cyan)',lg:1},
     {l:'成考续费',v:'¥'+fmt(s1.xf_month),s:'目标 ¥'+fmt(s1.xf_target),p:s1.xf_month/s1.xf_target*100,c:s1.xf_month>=s1.xf_target?'var(--green)':'var(--orange)',d:'var(--orange)'},
     {l:'成考学历',v:s1.xl_month+' 单',s:'目标 '+s1.xl_target+' 单',p:s1.xl_month/s1.xl_target*100,c:s1.xl_month>=s1.xl_target?'var(--green)':'var(--orange)',d:'var(--orange)'},
-    {l:'成考档案',v:s1.da_month+' 份',s:'目标 '+s1.da_target+' 份',p:s1.da_month/s1.da_target*100,c:s1.da_month>=s1.da_target?'var(--green)':'var(--cyan)',d:'var(--cyan)'},
+    {l:'成考其他单',v:s1.da_month+' 份',s:'目标 '+s1.da_target+' 份',p:s1.da_month/s1.da_target*100,c:s1.da_month>=s1.da_target?'var(--green)':'var(--cyan)',d:'var(--cyan)'},
     {l:'自考续费',v:'¥'+fmt(Math.round(s2.xf_month)),s:'目标 ¥'+fmt(s2.xf_target),p:s2.xf_month/s2.xf_target*100,c:s2.xf_month>=s2.xf_target?'var(--green)':'var(--purple)',d:'var(--purple)'},
     {l:'自考学历',v:s2.xl_month+' 单',s:'目标 '+s2.xl_target+' 单',p:s2.xl_month/s2.xl_target*100,c:s2.xl_month>=s2.xl_target?'var(--green)':'var(--green)',d:'var(--green)'},
-    {l:'自考档案',v:s2.da_month+' 份',s:'目标 '+s2.da_target+' 份',p:s2.da_month/s2.da_target*100,c:s2.da_month>=s2.da_target?'var(--green)':'var(--cyan)',d:'var(--cyan)'},
+    {l:'自考其他单',v:s2.da_month+' 份',s:'目标 '+s2.da_target+' 份',p:s2.da_month/s2.da_target*100,c:s2.da_month>=s2.da_target?'var(--green)':'var(--cyan)',d:'var(--cyan)'},
     {l:'网电续费',v:'¥'+fmt(s3.xf_month),s:'目标 ¥'+fmt(s3.xf_target)+(s3.xf_month>=s3.xf_target?' ✅':''),p:s3.xf_month/s3.xf_target*100,c:s3.xf_month>=s3.xf_target?'var(--green)':'var(--orange)',d:s3.xf_month>=s3.xf_target?'var(--green)':'var(--orange)'},
     {l:'网电学历',v:s3.xl_month+' 单',s:'目标 '+s3.xl_target+' 单'+(s3.xl_month>=s3.xl_target?' ✅':''),p:s3.xl_month/s3.xl_target*100,c:s3.xl_month>=s3.xl_target?'var(--green)':'var(--orange)',d:s3.xl_month>=s3.xl_target?'var(--green)':'var(--orange)'},
   ];
@@ -850,7 +859,7 @@ bd('wdRD',wdN,wdRDT,wdRD,true);bd('wdED',wdN,wdEDT,wdED,false);
         xlTgt:mt[n].xl, xlAct:p.xl_w[5],
         daTgt:mt[n].da, daAct:p.da_w[5],
         xfW:p.xf_w.slice(0,5), xlW:p.xl_w.slice(0,5), daW:p.da_w.slice(0,5),
-        xfD:last5(p.xf_31d), xlD:last5(p.xl_31d), daD:last5(p.da_31d),
+        xfD:weekValues(p.xf_31d), xlD:weekValues(p.xl_31d), daD:weekValues(p.da_31d),
         xfWT:Math.round(mt[n].xf/4),
         xlWT:Math.ceil(mt[n].xl/4),
         daWT:Math.ceil(mt[n].da/4)
@@ -885,7 +894,7 @@ bd('wdRD',wdN,wdRDT,wdRD,true);bd('wdED',wdN,wdEDT,wdED,false);
     if(hasDA){
       weights=[20,20,15,15,15,15];
       scores=[d1*20,d2*20,d3*15,d4*15,d5*15,d6*15];
-      dims=['续费达成','学历产出','档案执行','周稳定性','冲刺能力','日达标率'];
+      dims=['续费达成','学历产出','其他单执行','周稳定性','冲刺能力','日达标率'];
     }else{
       weights=[25,20,0,15,15,15];
       scores=[d1*25,d2*20,0,d4*15,d5*15,d6*15];
@@ -931,7 +940,7 @@ bd('wdRD',wdN,wdRDT,wdRD,true);bd('wdED',wdN,wdEDT,wdED,false);
     const dimAvgs=[];
     for(let j=0;j<6;j++){dimAvgs.push(members.reduce((s,p)=>s+p.scores[j],0)/members.length)}
     avgH+=`<div class="team-avg-card"><h4>${tn}团队均分 <span style="font-size:20px;font-weight:900;margin-left:8px" class="${gc}">${avg.toFixed(1)}</span> <span class="${gc}" style="font-weight:900;font-size:16px">${grade}</span></h4><div class="sc-dims">`;
-    const dimNames=['续费达成','学历产出','档案执行','周稳定性','冲刺能力','日达标率'];
+    const dimNames=['续费达成','学历产出','其他单执行','周稳定性','冲刺能力','日达标率'];
     const dimWeights=tn==='网电'?[25,20,0,15,15,15]:[20,20,15,15,15,15];
     for(let j=0;j<6;j++){
       if(dimWeights[j]===0)continue;
